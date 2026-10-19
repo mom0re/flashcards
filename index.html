@@ -146,6 +146,18 @@ textarea#impPrompt{min-height:180px}
 .impmsg{font-size:14px;margin:0;color:var(--muted)}
 .impmsg.err{color:var(--ink);background:var(--ochre-bg);border-radius:8px;padding:8px 10px}
 .danger{color:var(--ink);border-color:var(--ink)}
+.gen{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface-2)}
+.gen .lbl{margin-bottom:0}
+.genpick{justify-content:center;background:var(--surface)}
+.genlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.genlist:empty{display:none}
+.genlist li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 12px;font-size:14px}
+.genlist li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.genlist small{font:500 12px var(--mono);color:var(--muted)}
+.genlist .x{border:0;background:none;width:32px;height:32px;border-radius:8px;color:var(--muted)}
+.gen input[type=text],.gen input[type=password]{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font:16px var(--body);color:var(--ink);background:var(--surface)}
+.or{display:flex;align-items:center;gap:10px;color:var(--muted);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);height:100%}body{margin:0}[hidden]{display:none!important}</style>
 </head>
@@ -192,6 +204,17 @@ textarea#impPrompt{min-height:180px}
   <div class="grab"></div>
   <div class="body">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>Add your own deck</h3><button class="ghost" id="impClose" style="padding:8px 14px">Cancel</button></div>
+    <div class="gen">
+      <div class="lbl">Upload notes · cards made for you</div>
+      <label class="ghost filebtn genpick">＋ Choose PDF, photos or text<input type="file" id="genFile" multiple accept=".pdf,.txt,.md,.csv,application/pdf,text/plain,image/*"></label>
+      <ul class="genlist" id="genList"></ul>
+      <input id="genDetails" type="text" maxlength="500" placeholder="Optional: course name, exam date, what to focus on" aria-label="Optional details">
+      <input id="genPass" type="password" autocomplete="off" placeholder="Passcode" aria-label="Passcode">
+      <p class="impmsg" id="genMsg"></p>
+      <button class="primary" id="genGo" disabled>Make flashcards</button>
+      <p class="note">Takes about a minute for a set of lecture notes; keep the app open while it works.</p>
+    </div>
+    <div class="or"><span>or use any AI yourself</span></div>
     <ol class="steps">
       <li><div class="sb"><span><b>Copy the prompt.</b> It tells the AI exactly how to format the cards (up to 150).</span>
         <div class="row2"><button class="primary" id="copyPrompt" style="padding:11px 16px;font-size:15px">Copy AI prompt</button><button class="ghost" id="showPrompt" style="padding:10px 14px">Show it</button></div>

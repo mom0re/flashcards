@@ -313,7 +313,7 @@ Rules:
 Here are my notes:
 `;
 function openImport(){
-  $("impText").value=""; $("impMsg").textContent=""; $("impMsg").className="impmsg"; $("impPrompt").value=AI_PROMPT;
+  $("impText").value=""; $("impMsg").textContent=""; $("impMsg").className="impmsg"; $("impPrompt").value=AI_PROMPT; if(!generating)renderGenFiles();
   openSheet("importSheet");
 }
 $("copyPrompt").onclick=async()=>{
@@ -333,17 +333,84 @@ function impError(m){$("impMsg").textContent=m;$("impMsg").className="impmsg err
 function doImport(){
   const text=$("impText").value;
   if(!text.trim()){impError("Paste the AI's reply into the box first.");return}
+  importText(text,impError);
+}
+function importText(text,onErr){
   let deck,parsed;
   const id="u-"+Date.now().toString(36);
-  try{ parsed=extractJSON(text); if(Array.isArray(parsed))parsed={cards:parsed}; deck=normalise(parsed,id,false) }catch(e){impError(e.message);return}
+  try{ parsed=extractJSON(text); if(Array.isArray(parsed))parsed={cards:parsed}; deck=normalise(parsed,id,false) }catch(e){onErr(e.message);return false}
   const rawList=readUserRaw();
   rawList.push(Object.assign({},parsed,{id}));
   const saved=writeUserRaw(rawList);
   DECKS.push(deck); pickDeck(deck.id); closeSheets(); startDeck();
   toast(`Added ${deck.cards.length} cards`+(deck.skipped?` (${deck.skipped} skipped)`:""));
   if(!saved)setTimeout(()=>toast("Couldn't save the deck on this phone; it will go if you refresh"),1800);
+  return true;
 }
 $("impGo").onclick=doImport;
+
+/* ---------- make cards from uploaded files (server calls Claude) ---------- */
+const GEN_MAX_BYTES=3.2*1024*1024, GEN_MAX_FILES=5;
+let genFiles=[], generating=false;
+try{$("genPass").value=localStorage.getItem("sscards-pass")||""}catch(e){}
+function genMsg(m,err){$("genMsg").textContent=m;$("genMsg").className="impmsg"+(err?" err":"")}
+function fileType(f){
+  if(f.type)return f.type.toLowerCase();
+  const ext=(f.name.split(".").pop()||"").toLowerCase();
+  return ({pdf:"application/pdf",txt:"text/plain",md:"text/markdown",csv:"text/csv",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"})[ext]||"";
+}
+function readB64(blob){return new Promise((ok,bad)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(",")[1]||"");r.onerror=()=>bad(new Error("Couldn't read the file."));r.readAsDataURL(blob)})}
+async function shrinkImage(file){
+  // phone photos are huge: scale to 2000px JPEG so more fit under the size limit
+  try{
+    const bmp=await createImageBitmap(file); const k=Math.min(1,2000/Math.max(bmp.width,bmp.height));
+    const c=document.createElement("canvas"); c.width=Math.round(bmp.width*k); c.height=Math.round(bmp.height*k);
+    c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    const blob=await new Promise(r=>c.toBlob(r,"image/jpeg",0.82)); return blob||file;
+  }catch(e){return file}
+}
+function renderGenFiles(){
+  const total=genFiles.reduce((s,f)=>s+f.size,0);
+  $("genList").innerHTML=genFiles.map((f,i)=>`<li><span>${esc(f.name)}</span><small>${(f.size/1048576).toFixed(1)} MB</small><button class="x" data-i="${i}" aria-label="Remove ${esc(f.name)}">✕</button></li>`).join("");
+  $("genList").querySelectorAll(".x").forEach(b=>b.onclick=()=>{genFiles.splice(+b.dataset.i,1);renderGenFiles()});
+  $("genGo").disabled=!genFiles.length||generating;
+  if(total>GEN_MAX_BYTES)genMsg(`Files total ${(total/1048576).toFixed(1)} MB; the limit is about 3 MB. Remove one or split the PDF.`,true);
+  else if(!generating)genMsg(genFiles.length?"":"PDF, photos of notes, or text files. Export Word or PowerPoint as PDF first.");
+}
+$("genFile").onchange=async e=>{
+  const picked=[...(e.target.files||[])]; e.target.value="";
+  for(const f of picked){
+    const t=fileType(f);
+    if(!(t==="application/pdf"||t.startsWith("image/")||t.startsWith("text/"))){genMsg(`"${f.name}" isn't supported. Use PDF, a photo, or a text file.`,true);continue}
+    if(genFiles.length>=GEN_MAX_FILES){genMsg(`Up to ${GEN_MAX_FILES} files at a time.`,true);break}
+    let blob=f; if(t.startsWith("image/")&&t!=="image/gif") blob=await shrinkImage(f);
+    genFiles.push({name:f.name,type:blob===f?t:"image/jpeg",size:blob.size,blob});
+  }
+  renderGenFiles();
+};
+$("genGo").onclick=async()=>{
+  if(generating)return;
+  const pass=$("genPass").value.trim();
+  if(!pass){genMsg("Enter the passcode first.",true);$("genPass").focus();return}
+  const total=genFiles.reduce((s,f)=>s+f.size,0);
+  if(!genFiles.length){genMsg("Add a file first.",true);return}
+  if(total>GEN_MAX_BYTES){renderGenFiles();return}
+  try{localStorage.setItem("sscards-pass",pass)}catch(e){}
+  generating=true; $("genGo").disabled=true; $("genGo").textContent="Making cards…"; genMsg("Uploading…");
+  const started=Date.now(); const tick=setInterval(()=>{const s=Math.round((Date.now()-started)/1000);if($("genMsg").dataset.cards)genMsg(`Writing cards… ${$("genMsg").dataset.cards} so far (${s}s)`);else genMsg(`Reading your files… (${s}s)`)},1000);
+  const finish=()=>{clearInterval(tick);generating=false;$("genGo").textContent="Make flashcards";$("genMsg").dataset.cards="";renderGenFiles()};
+  try{
+    const files=await Promise.all(genFiles.map(async f=>({name:f.name,type:f.type,data:await readB64(f.blob)})));
+    const r=await fetch("api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({passcode:pass,details:$("genDetails").value.slice(0,500),files})});
+    if(!r.ok){let m=`Something went wrong (${r.status}).`;try{const j=await r.json();if(j.error)m=j.error}catch(e){} if(r.status===413)m="Those files are too big together. Split them and make two decks."; finish(); genMsg(m,true); return}
+    const reader=r.body.getReader(), dec=new TextDecoder(); let text="";
+    for(;;){const {done,value}=await reader.read(); if(done)break; text+=dec.decode(value,{stream:true}); const n=(text.match(/"q"\s*:/g)||[]).length; if(n)$("genMsg").dataset.cards=n}
+    finish();
+    const em=text.match(/\[\[ERROR:([\s\S]*?)\]\]/);
+    if(em){genMsg(em[1],true);return}
+    if(importText(text,m=>genMsg("The AI's reply didn't come out as a valid deck. Try again. ("+m+")",true))){genFiles=[];renderGenFiles();$("genDetails").value=""}
+  }catch(e){finish();genMsg("Lost connection while making the cards. Check your signal and try again.",true)}
+};
 $("impClose").onclick=closeSheets;
 
 /* ---------- countdown ---------- */

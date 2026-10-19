@@ -31,3 +31,9 @@ Study progress is never saved: it resets on refresh or after 3 hours idle.
 1. Save the deck as `decks/<id>.json`.
 2. Add `{ "id": "<id>", "file": "decks/<id>.json" }` to `decks/index.json`.
 3. Commit to `main`; Vercel redeploys automatically.
+
+## Upload notes → cards (Claude API)
+`api/generate.js` is a Vercel function that sends uploaded files (PDF, images, text; ~3 MB total, 5 files) to Claude and streams back a deck in the format above. It needs these Vercel environment variables:
+- `ANTHROPIC_API_KEY`: Claude API key (console.anthropic.com). Set a monthly spend limit there.
+- `FLASHCARD_PASSCODE`: passcode people type in the app.
+- `ANTHROPIC_MODEL` (optional): defaults to `claude-sonnet-5-5`.
