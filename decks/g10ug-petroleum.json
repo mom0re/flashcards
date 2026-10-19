@@ -1,0 +1,854 @@
+{
+ "name": "Introduction to Petroleum Engineering",
+ "short": "Petroleum (G10UG)",
+ "exam": "2026-10-27",
+ "sectionWord": "Chapter",
+ "sections": {
+  "1": "Field development",
+  "2": "Petroleum geoscience",
+  "3": "Petroleum geophysics",
+  "4": "Reserve estimates",
+  "5": "Pressure & temperature"
+ },
+ "cards": [
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Describe two of the five phases of field development and their main objectives.",
+   "a": "<ol><li><b>Exploration</b>: identify a potential reservoir, i.e. map a subsurface structure that could trap hydrocarbons.</li>\n<li><b>Evaluation</b>: identify the prospect reservoir: the nature of the hydrocarbons, the amount in place and the fraction recoverable.</li>\n<li><b>Development (design & set-up of facilities)</b>: design the development and drill wells, platforms, processing and export systems, and check the economics.</li>\n<li><b>Production</b>: maximise efficiency: produce at the maximum rate for the longest period, safely and at minimum cost.</li>\n<li><b>Abandonment</b>: safety and security when a well or field no longer pays.</li></ol>",
+   "tip": "<b>Marks:</b> name the phase, then give its objective in one line. Learn all five in order: you may get asked for any two.",
+   "source": "Class test 2024 Q1(ii) · 3 marks"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "What is the main objective of the exploration phase, and what can exploration NOT do?",
+   "a": "<p>Identify the prospect <b>in structural terms</b>: produce a geological/geophysical map of a subsurface structure that could act as a trap, showing approximate size and main features such as faults. It is a macro-scale picture from limited data.</p>\n<p>It <b>cannot confirm hydrocarbons are present</b>. Only physically penetrating the structure (drilling an exploration well) and measuring and sampling it can do that. Exploration is mainly done by geologists and geophysicists.</p>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "List the five techniques used to identify a structure during exploration.",
+   "a": "<ol><li>Previous geological/geophysical information</li><li>Aerial and satellite surveys (e.g. Landsat)</li><li>Oil and gas seeps</li><li>Geophysical methods (magnetic, gravity, seismic)</li><li>Exploration drilling</li></ol>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "Give four sources of previous geological/geophysical information.",
+   "a": "<ul><li>Private company libraries (maps, drilling, production and well-log data)</li><li>Public agency records, universities, publications</li><li>Computer databases of public and private organisations</li><li>General depositional trends from adjacent prospects with more data</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Oil and gas seeps are the most obvious sign of hydrocarbons. Why are they of limited use?",
+   "a": "<ul><li>Seepage is often slow, so it is hard to detect.</li><li>Bacteria and weathering decompose the hydrocarbon as soon as it reaches the surface.</li><li>Most seep locations have already been exploited.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "What is determined from an exploration well while and after it is drilled?",
+   "a": "<ul><li>Cuttings are analysed at the wellsite to build a geological model.</li><li>Logs are run before casing: geological and log data show whether there are hydrocarbon-bearing zones (porosity and hydrocarbon saturation).</li><li>If there are, assess: nature and quantity of hydrocarbon, flow properties, pressure, depth, zone thickness and whether there is an aquifer.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "State the two major objectives of field evaluation, and the three main groups of data it needs.",
+   "a": "<p><b>Objectives:</b> (1) the nature of the hydrocarbons in place; (2) the amount in place and the fraction that is recoverable.</p>\n<p><b>Data needed:</b></p><ul><li>Depositional sequence, thickness and mineralogy of the layers</li><li>Pore space: porosity and fluid saturations</li><li>Permeability or production capacity</li></ul>\n<p>Coordinating data collection is normally the <b>petroleum engineering</b> department's job. Exploration-well costs are often written off against the value of the data acquired.</p>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Compare coring with drill cuttings as sources of evaluation data.",
+   "a": "<ul><li><b>Core</b>: a continuous cylindrical section of the vertical sequence, cut and brought to surface. Gives a large rock sample and detailed information on the sedimentary sequence.</li>\n<li><b>Cuttings</b>: rock fragments produced by a normal bit. Not continuous, so less useful than core, but still give useful information on the formations' geology.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "What are the two logging sources of information during evaluation?",
+   "a": "<ol><li><b>Driller's log</b>: the driller's record of rock and fluid types encountered and the time taken to drill each formation.</li>\n<li><b>Wireline logging</b> (the more important): information about the borehole, the near-wellbore reservoir and its fluid content.</li></ol>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Well testing aims to provide information in which two areas?",
+   "a": "<ol><li>Whether <b>mobile hydrocarbons</b> are present, by inducing the reservoir to produce fluid to the wellbore.</li>\n<li>The <b>production capacity</b> of the well, particularly the relationship between reservoir pressure and flow.</li></ol>\n<p>Tests can use wireline tools, a drill stem or a production string. Expensive, but if designed well they represent a wider section of the reservoir.</p>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "What does a repeat formation test (RFT) measure, and what can it NOT tell you?",
+   "a": "<p>A tool is set against the borehole wall to measure <b>pore pressure</b> at that depth and take a <b>formation fluid sample</b>, then repositioned (a few minutes per reading).</p>\n<p>Static pressure vs depth gives fluid <b>density</b> (so fluid type), <b>fluid contacts</b> and some information on reservoir structure.</p>\n<p>It does <b>not</b> give formation <b>capacity or permeability</b>. That needs a flow test (DST).</p>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Identify a source of data from the exploration-well evaluation techniques that can directly be used to determine reservoir permeability or production capacity. Support your choice with a brief reason.",
+   "a": "<p><b>Well testing</b> (drill stem test, DST, or wireline formation test, WFT).</p><p><b>Reason:</b> during these operations the flow of mobile fluid is actually measured (flow rate together with bottom-hole pressure), which is what permeability and production capacity depend on.</p>",
+   "tip": "<b>Trap:</b> logs and RFT pressures are static. Only a flowing test measures capacity.",
+   "source": "Class test 2024 Q1(i) · 2 marks"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Describe a drill stem test (DST).",
+   "a": "<ul><li>A flow test that uses the <b>drill pipe as the flow conduit</b>.</li><li>Lets a section of formation flow as if on production.</li><li>Measures bottom-hole pressure and flow rate (at bottom or surface).</li><li>Lasts about <b>8–24 hours</b>; data from exploration wells are kept confidential.</li><li>Very expensive: with drilling cost, a massive investment.</li><li>Gives capacity/permeability, which an RFT cannot.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Discuss the differences between wireline logs and DST, as two exploration-well evaluation techniques, in terms of the type of information they provide.",
+   "a": "<p><b>Wireline logs:</b> sondes measure and record electrical, radioactive or acoustic properties of the formation. They give <b>static</b> properties of rock and fluid (e.g. porosity, saturation) near the wellbore.</p>\n<p><b>DST:</b> the well (or a section) is flowed through the drill pipe to measure, for the first time, <b>bottom-hole pressure and flow rate</b>: <b>dynamic</b> properties. It also recovers the <b>real fluid composition</b>.</p>",
+   "tip": "<b>Key word pair:</b> static vs dynamic. Say it explicitly.",
+   "source": "Past paper 2025 Q7 · 5 marks"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "What is the purpose of appraisal wells and how are they located?",
+   "a": "<ul><li>Purpose: <b>delineate the boundaries</b> of the reservoir, ideally intersecting the oil–water and gas–oil contacts.</li><li>Drilled in succession, typically to the north, south, east and west of the discovery.</li><li>Locations can't be fully planned in advance: data from each well is reviewed and the next location changed accordingly.</li><li>Logged and tested in the same way as the exploration well.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "List four items of particular interest in the development (design & set-up of facilities) phase.",
+   "a": "<ol><li>Drilling and completion of individual wells, including how the production interval is completed</li><li>Platform requirements: wellhead, separation facilities, accommodation</li><li>Fluid processing and export systems</li><li>Future support of production: fluid re-injection for pressure maintenance, or artificial lift</li></ol>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Why does the development phase still involve evaluation?",
+   "a": "<p>Development wells are evaluated as they are drilled, giving more reservoir, rock and fluid data at each location. This improves the reservoir model used to monitor the development, so the plan is modified <b>dynamically</b>. A key focus is predicting how the reservoir will respond to production over an extended period.</p>"
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "State the three aims of the production phase.",
+   "a": "<ol><li>Produce at the <b>maximum rate</b> for the <b>maximum period</b> possible</li><li>Ensure maximum <b>safety</b> for personnel, capital and environment at all times</li><li><b>Continuously assess</b> the process to maximise efficiency and keep production cost to a minimum</li></ol>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Sketch and discuss the phases of production.",
+   "a": "<svg class=\"sk\" viewBox=\"0 0 440 200\" role=\"img\" aria-label=\"Production rate against time: build-up, plateau, decline\">\n<line class=\"ax\" x1=\"40\" y1=\"170\" x2=\"420\" y2=\"170\"/><line class=\"ax\" x1=\"40\" y1=\"170\" x2=\"40\" y2=\"15\"/>\n<path class=\"ln\" d=\"M40 170 C70 120 90 60 120 55 L260 55 C300 60 330 110 410 150\"/>\n<line class=\"gd\" x1=\"120\" y1=\"20\" x2=\"120\" y2=\"170\"/><line class=\"gd\" x1=\"260\" y1=\"20\" x2=\"260\" y2=\"170\"/>\n<text x=\"55\" y=\"35\">build-up</text><text x=\"165\" y=\"45\">plateau</text><text x=\"300\" y=\"45\">decline</text>\n<text x=\"300\" y=\"190\">time →</text><text x=\"4\" y=\"12\">rate</text>\n<path class=\"ln2\" d=\"M260 55 L300 55 C330 60 350 100 410 130\"/><text x=\"318\" y=\"100\">with lift</text></svg><ul><li><b>Build-up</b>: rate rises to facility capacity as wells come on stream. Economics are front-end loaded, so reach plateau quickly.</li><li><b>Plateau</b>: rate limited by production/processing facilities; typically about <b>10% of recoverable reserves per year</b>.</li><li><b>Decline</b>: the reservoir can no longer deliver plateau rate. Hard to model; delayed by artificial lift (downhole pumps, gas lift).</li></ul>",
+   "tip": "<b>Learning outcome:</b> \"Discuss, with a schematic sketch\". Label the axes and all three phases."
+  },
+  {
+   "section": 1,
+   "type": "recall",
+   "q": "When is a well abandoned, and what could it be used for instead?",
+   "a": "<p>When it can no longer produce economically, i.e. the cost of the well and its production exceeds the revenue from the fluids. It must then be abandoned <b>safely</b>, or converted to an <b>injector</b> or a <b>monitoring</b> well.</p>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "Explain why reservoirs are 'unique' and why reservoir description is described as dynamic.",
+   "a": "<ul><li>Unlike other industries, a design can't be duplicated: fluid composition, rock properties, size and shape are unique to each reservoir.</li><li>From our side the description is <b>dynamic</b>: the reservoir gives up its secrets over time as data accumulate.</li><li>From the reservoir's side it is <b>static</b>, except for changes caused by production or injection.</li><li>The challenge: shorten the time for our dynamic description to match the static reality.</li></ul>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "What does the Leman field example show, and what is a unitization agreement?",
+   "a": "<p>Top-structure maps of this North Sea gas field drawn ten years apart: much more faulting appears later, not from geology changing but from data from new wells. Reservoir coverage across blocks also changed, which affected equity.</p>\n<p><b>Unitization agreements</b> are the equity agreements between block owners. They are reached faster with good, comprehensive reservoir data. The value of extra information always has to be weighed against the cost of delaying the project.</p>"
+  },
+  {
+   "section": 1,
+   "type": "explain",
+   "q": "How do onshore and offshore field developments differ?",
+   "a": "<ul><li><b>Onshore:</b> exploration wells and evaluation are relatively cheap, so evaluation can be completed quickly; logistics are easier; but fields are generally smaller, needing less detailed engineering.</li><li><b>Offshore:</b> difficult logistics and more advanced technology mean developments may be uneconomic unless the field is large.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Name and define the five things a petroleum geologist must identify to find an accumulation.",
+   "a": "<ol><li><b>Source</b>: organic-rich rock where hydrocarbons were generated during burial</li><li><b>Migration pathway</b> from source to reservoir</li><li><b>Reservoir rock</b>: porous and permeable</li><li><b>Seal</b>: impermeable unit that stops hydrocarbons escaping</li><li><b>Trap</b>: the shape of reservoir + seal that forms a subsurface \"container\"</li></ol><p>Plus <b>timing</b>: trap, reservoir and seal must exist before migration.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "List the layers of the Earth from the centre outwards.",
+   "a": "<ol><li>Inner core: solid iron</li><li>Outer core: liquid iron (generates the magnetic field)</li><li>Lower mantle: less mobile</li><li>Upper mantle: transition zone, <b>asthenosphere</b> (very mobile), and part of the <b>lithosphere</b> (fairly rigid)</li><li>Crust: the solid, cool top of the lithosphere</li></ol><p>Earth formed about 4.5 Ga by accretion, then separated by gravity and thermal convection.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Compare oceanic and continental crust.",
+   "a": "<div class=\"tscroll\"><table><tr><th></th><th>Oceanic</th><th>Continental</th></tr><tr><td>Composition</td><td>Iron-rich</td><td>Silica-rich</td></tr><tr><td>Density</td><td>Denser</td><td>Less dense</td></tr><tr><td>Thickness</td><td>Thin, up to ~10 km</td><td>~40 km, up to 70 km under mountains</td></tr></table></div><p>Even 70 km is only ~1% of Earth's 6,373 km radius.</p>"
+  },
+  {
+   "section": 2,
+   "type": "formula",
+   "q": "Radioactive decay: state the decay law and the half-life equation. Why does radioactivity matter?",
+   "a": "<div class=\"eq\">−dN/dt = λN\nT½ = ln 2 / λ</div><p>N = number of radioactive atoms, λ = decay constant, t = time.</p><ul><li>¹⁴C → ¹⁴N: T½ = 5,730 yr, for recent geological/archaeological dating</li><li>Rb → Sr: T½ = 4.88 × 10⁹ yr, for ancient Earth history</li><li>Decay of U and Th keeps Earth hotter than simple cooling would, and provides absolute (radiometric) dating</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "calc",
+   "q": "Carbon-14 has a decay constant λ = 1.21 × 10⁻⁴ per year. Calculate its half-life.",
+   "a": "<div class=\"eq\">T½ = ln 2 / λ = 0.6931 / 1.21×10⁻⁴\n   = 5,728 yr ≈ <span class=\"res\">5,730 years</span></div>",
+   "hint": "T½ depends only on λ."
+  },
+  {
+   "section": 2,
+   "type": "calc",
+   "q": "What fraction of the original ¹⁴C remains after 11,460 years? (λ = 1.21 × 10⁻⁴ yr⁻¹)",
+   "a": "<div class=\"eq\">N/N₀ = e^(−λt) = e^(−1.21×10⁻⁴ × 11,460)\n     = e^(−1.387) = <span class=\"res\">0.25 (25%)</span></div><p>Check: 11,460 yr is two half-lives, so ½ × ½ = ¼.</p>",
+   "hint": "Integrate the decay law: N = N₀e^(−λt)."
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "What is plate tectonics, what drives it, and why does it matter for petroleum?",
+   "a": "<ul><li>The lithosphere (crust + cool rigid upper mantle) is split into plates (currently ~55) that move towards, away from or past each other.</li><li>Driven by slow <b>convection currents in the asthenosphere</b>, plus drag of subducting plates.</li><li>Theory established in the early 1960s.</li><li>It explains past and present distribution of rock types and the development of structures that can trap hydrocarbons, so we can predict rock associations and structures in a basin.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "What two facts allow magnetic signatures in rocks to be evidence for sea-floor spreading and plate movement?",
+   "a": "<ol><li>Magnetic minerals crystallised or deposited as a rock forms align with Earth's field and stay fixed once the rock solidifies.</li><li>Earth's field periodically <b>reverses</b> (normal ↔ reverse), last about 730,000 years ago, so reversals are a dating tool.</li></ol><p>Oceanic crust at mid-ocean ridges shows magnetic stripes parallel to the spreading axis. For other rocks, lab measurements of field strength and orientation give where and when the rock formed.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Describe the three types of plate boundary, with an example of each.",
+   "a": "<ul><li><b>Divergent</b>: rifting in continental crust (East African Rift) or sea-floor spreading in oceanic crust (Mid-Atlantic Ridge, Iceland).</li><li><b>Convergent</b>: mountain chains (Himalayas, Alps, Rockies, Andes) or ocean destruction at subduction zones (east of the Philippines). Site of most earthquakes and volcanoes.</li><li><b>Transform</b>: plates slide past; large strike-slip faults in continental crust (San Andreas) or small transform faults offsetting mid-ocean ridges.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Why do subduction zones produce volcanoes?",
+   "a": "<p>One plate bends down and is subducted (a trench forms where plates meet; the overriding plate crumples into mountains). As the slab descends into the asthenosphere, heating releases water from its rocks. The rising water causes partial melting of the mantle above, and the melt rises to form volcanoes.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Distinguish between a rock and a mineral.",
+   "a": "<p><b>Mineral:</b> a naturally occurring <b>inorganic</b> element or compound with an orderly internal structure and characteristic chemical composition, crystal form and physical properties.</p><p><b>Rock:</b> an aggregate of grains or crystals of one or more minerals (granite = quartz + feldspar + mica; sandstone = quartz grains), or undifferentiated mineral matter (obsidian), or organic matter (coal).</p>"
+  },
+  {
+   "section": 2,
+   "type": "formula",
+   "q": "Define porosity. In which rocks is it more common?",
+   "a": "<div class=\"eq\">φ = total void (pore) volume / total rock volume</div><p>Expressed as a fraction or percentage. More common in rocks made of <b>grains</b> (sedimentary) than rocks made of <b>crystals</b> (igneous, metamorphic). Hydrocarbons sit in the pore space.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Compare extrusive and intrusive igneous rocks, and explain their relevance to petroleum.",
+   "a": "<ul><li><b>Extrusive</b> (lavas, tuffs, e.g. basalt, andesite, rhyolite): erupted at the surface, cool fast, fine crystals, often gas bubbles.</li><li><b>Intrusive</b> (granite, gabbro, diorite): cool slowly at depth, coarse visible crystals. <b>Dikes</b> cut across layers; <b>sills</b> run along them.</li><li>Igneous rocks form ~96% of the crust; they are crystalline with very low porosity and no permeability, so rarely targets. Fractured granites/lavas occasionally produce; they can act as <b>seals</b>.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "How do metamorphic rocks form, and why are they rarely drilling targets?",
+   "a": "<ul><li>Recrystallisation of older rocks by <b>thermal</b> metamorphism (heat around igneous intrusions) or <b>regional</b> metamorphism (heat + pressure + deformation from deep burial and mountain building).</li><li>Bulk composition does <b>not</b> change: limestone → marble, quartz sandstone → quartzite, mudrocks → schist/gneiss.</li><li>Fully recrystallised: no porosity or permeability (though often fractured), so rarely targets. Extreme burial melts them back to igneous rock.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "How do sedimentary rocks form, and what is a sedimentary basin?",
+   "a": "<p>Particles accumulate as sediment, then undergo <b>burial, compaction and cementation</b>. Sedimentary rocks form the large majority of petroleum <b>reservoirs and source rocks</b>.</p><p>A <b>basin</b> is a regional area of active subsidence where sediments accumulate. Space must keep being created for burial; subsidence always involves crustal deformation, often linked to plate tectonics.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Name the three classes of sedimentary rock, with examples and typical permeability.",
+   "a": "<ol><li><b>Clastic / detrital</b>: erosion, transport, deposition of fragments (conglomerate, sandstone, mudstone). Coarse = often porous and permeable; fine = impermeable.</li><li><b>Chemical</b>: direct precipitation from water (limestones, evaporites). Crystalline, impermeable.</li><li><b>Organic</b>: accumulated animal/plant remains (limestone, chert, coal). Limestones can be very porous and permeable; others tend to be impermeable.</li></ol>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "What are 'siliciclastic' and 'carbonate' rocks?",
+   "a": "<p><b>Siliciclastic:</b> clastic rocks made of quartz, feldspar, other silica-based minerals and rock fragments.</p><p><b>Carbonate:</b> rocks made of carbonate minerals (CaCO₃ or CaMg(CO₃)₂), e.g. limestone, dolostone; formed chemically or organically.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Which factors control porosity and permeability in sedimentary rocks?",
+   "a": "<ul><li><b>Texture</b>: grain size, sorting, shape, roundness, packing.</li><li>Highest porosity: <b>well-sorted, medium-to-coarse sandstones</b>. Conglomerates are poorly sorted (less void space); mudstones compact very effectively.</li><li><b>Permeability</b> depends on pore size and pore-throat connectivity; sandstones have the largest connected pores.</li><li><b>Cementation and compaction</b> during burial reduce both, so deeper/older rocks are poorer.</li><li>Bedding and sedimentary structures make porosity and permeability <b>heterogeneous</b>, which affects production strategy.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "There are five different types of stratigraphy depending on the data analysed. Identify two of them and the data analysed by each.",
+   "a": "<div class=\"tscroll\"><table><tr><th>Type</th><th>Data analysed</th></tr><tr><td>Lithostratigraphy</td><td>Rock types</td></tr><tr><td>Biostratigraphy</td><td>Fossil content (age, environment)</td></tr><tr><td>Chemostratigraphy</td><td>Chemical composition</td></tr><tr><td>Magnetostratigraphy</td><td>Magnetic signatures</td></tr><tr><td>Sequence stratigraphy</td><td>Arrangement/grouping of layers into sequences</td></tr></table></div>",
+   "tip": "<b>Marks:</b> 2 per type: name + what it analyses. Chronostratigraphy (time) is a sixth term, but the question means these five.",
+   "source": "Class test 2024 Q2(i) · 4 marks"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "State Steno's three principles of stratigraphy, and the basic principle behind them.",
+   "a": "<p><b>\"The present is the key to the past\":</b> processes acting today acted in the past, so modern environments tell us what ancient deposits look like.</p><ol><li><b>Original horizontality</b>: sediments are deposited on a roughly flat surface (gravitational settling).</li><li><b>Superposition</b>: in undisturbed strata, younger lies on older (oldest at the bottom).</li><li><b>Original continuity</b>: strata extend laterally until they meet an obstacle, taper off or grade into another sediment.</li></ol><p>Modern refinement: beds can be deposited at a few degrees, and lateral facies changes matter.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "State Walther's Law and explain how it helps identify an unconformity.",
+   "a": "<p><b>\"Lithostratigraphic transitions in a conformable vertical sequence reflect laterally migrating environments\"</b> (1894).</p><p>As environments shift over time, each new layer comes from an environment that was <b>adjacent</b> to the previous one. If two vertically stacked lithologies could not have formed in adjacent environments, an <b>unconformity</b> (erosion or non-deposition) lies between them.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Distinguish a hiatus, angular unconformity, disconformity and paraconformity.",
+   "a": "<ul><li><b>Hiatus</b>: a small gap in the record.</li><li><b>Unconformity</b>: a large gap (millions of years).</li><li><b>Angular unconformity</b>: strata below were tilted/deformed and eroded before new layers were deposited.</li><li><b>Disconformity</b>: parallel strata, with evidence of erosion.</li><li><b>Paraconformity</b>: parallel strata, caused by a period of non-deposition.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "'Processes act on what is already there.' How is this used to interpret a cross-section?",
+   "a": "<p>It extends superposition: any folding, faulting or intrusion can only affect sediments that already exist. So a fault or fold is <b>younger than every layer it cuts or bends</b>, and layers lying undisturbed on top of it are younger again. Ordering these relationships gives the geological history of the area.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Interpreting a cross-section with a fault, folded layers and an unconformity: (i) what traps do you see? (ii) which layers are oldest/youngest and why? (iii) can hydrocarbons migrate from reservoir A (sealed by B) to layer C?",
+   "a": "<ol><li><b>Structural traps:</b> fault, fold. <b>Stratigraphic traps:</b> angular unconformity, disconformity. Point to where each is.</li><li><b>Oldest:</b> the lowest, inclined layer (bottom left). <b>Youngest:</b> the top layer. Justify with the <b>law of superposition</b>.</li><li>Only via the <b>(normal) fault plane</b>: if the fault is permeable, hydrocarbons migrate up it to C; if the fault is sealing, no migration.</li></ol>",
+   "tip": "<b>Method:</b> always name the law you use, and give both outcomes (permeable vs sealing fault) when the question doesn't say which.",
+   "source": "Past paper 2025 Q2 · 7 marks"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Why are Precambrian rocks generally not of interest to petroleum geologists?",
+   "a": "<p>Precambrian = all time before ~<b>542 Ma</b>. Their age means reservoir rocks are low quality, and the lack of concentrated organic matter means a lack of source rocks. The explosion of life at the base of the Cambrian (Paleozoic) made organic-rich source rocks, and petroleum systems, possible.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Put the eras and periods in order, oldest to youngest, with base ages.",
+   "a": "<div class=\"tscroll\"><table><tr><th>Era</th><th>Periods (base age, Ma)</th></tr>\n<tr><td>Paleozoic</td><td>Cambrian 542 · Ordovician 488 · Silurian 444 · Devonian 416 · Carboniferous 359 · Permian 299</td></tr>\n<tr><td>Mesozoic</td><td>Triassic 251 · Jurassic 200 · Cretaceous 146</td></tr>\n<tr><td>Cenozoic</td><td>Tertiary: Paleocene 65 · Eocene 56 · Oligocene 34 · Miocene 23 · Pliocene 5. Quaternary: Pleistocene 2 · Recent</td></tr></table></div><p>Mnemonic: <i>Camels Often Sit Down Carefully, Perhaps Their Joints Creak</i>.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Distinguish plastic and brittle deformation. Which is always younger than the layers it affects?",
+   "a": "<p><b>Plastic:</b> rocks bend without breaking, producing <b>folds</b>. <b>Brittle:</b> rocks break across layers, producing <b>faults and fractures</b>.</p><p><b>Both</b> are always younger than all the layers they affect.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Define strike, dip, trend and plunge.",
+   "a": "<ul><li>Planar features (beds, faults) use <b>strike and dip</b>.</li><li><b>Strike</b>: a horizontal line on the inclined plane, recorded as a compass bearing.</li><li><b>Dip</b>: at right angles to strike; the angle between the plane and horizontal (measured with a clinometer).</li><li>Linear features (fold axes, lineations, slickensides) use <b>trend and plunge</b>.</li><li><b>Trend</b>: compass bearing of the line. <b>Plunge</b>: angle between the line and horizontal.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Distinguish faults from fractures, and classify faults by movement.",
+   "a": "<ul><li><b>Fault</b>: a break with significant movement across it. <b>Fracture</b>: a break without significant movement.</li><li><b>Strike-slip</b>: horizontal movement. <b>Sinistral</b> (left-lateral) or <b>dextral</b> (right-lateral), judged by which way the far block moves as you look across the fault.</li><li><b>Dip-slip</b>: vertical movement. <b>Normal</b> if the hanging wall moves down, <b>reverse</b> if the hanging wall moves up.</li><li><b>Oblique slip</b>: a combination.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "How can faults affect fluid flow and hydrocarbon trapping?",
+   "a": "<ul><li>A fault is often a thick, complex zone of deformation, not a single plane, and usually occurs in sets.</li><li>Its permeability can be much higher or much lower than the surrounding rock, so it acts as a <b>conduit</b> for migration or a <b>barrier</b> to flow.</li><li>Faults trap hydrocarbons by <b>offsetting reservoir against sealing layers</b>, or by being sealing themselves.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Describe the types of fold, and say which make the best traps.",
+   "a": "<ul><li><b>Anticline</b> (upfold) and <b>syncline</b> (downfold).</li><li><b>Plunging fold</b>: fold axis (line of maximum curvature) not horizontal.</li><li><b>Monocline</b>: fold with a vertical limb.</li><li><b>Dome</b>: anticline without a linear axis.</li></ul><p>Anticlines and especially <b>domes</b> (or folds with multiple/changing plunge) make ideal traps: an enclosed high where hydrocarbons gather under a seal.</p>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "List the four elements required for the formation of a hydrocarbon accumulation.",
+   "a": "<ol><li>A source of carbon and hydrogen</li><li>A suitable environment for decomposing organic material into petroleum</li><li>Porous and permeable rock to hold and allow migration of petroleum</li><li>A local geological trap for commercial accumulation</li></ol>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "How is petroleum generated, and what makes a good source rock?",
+   "a": "<ul><li>Organic matter buried under high pressure and moderate-to-high temperature (<b>&lt; 200 °C</b>) converts with heat and time to <b>kerogen</b>, then to mobile hydrocarbon.</li><li>Needs at least ~<b>1 km of burial</b>, depending on the geothermal gradient.</li><li>Only a small fraction is converted, so large source volumes are needed. Good source rocks have <b>&gt; 5% organic matter</b>.</li><li>Examples: marine or lagoonal mudrocks (especially anoxic), lacustrine mudrocks, coals.</li><li>Organic matter survives only if not exposed to oxygen or consumed by organisms, so source rocks form in <b>anoxic</b> environments.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Define immature, mature and over-mature source rocks.",
+   "a": "<ul><li><b>Immature</b>: insufficient burial to convert organic matter to hydrocarbons.</li><li><b>Mature</b>: the right temperature has been reached; hydrocarbons have been or are being generated.</li><li><b>Over-mature</b>: buried beyond the generation window; all organic matter converted to graphite.</li></ul>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Distinguish primary and secondary migration.",
+   "a": "<p><b>Primary migration (expulsion):</b> generation causes volume expansion that fractures the source rock, letting hydrocarbons escape into surrounding rocks.</p><p><b>Secondary migration:</b> movement away from the source through pore space of surrounding rocks, driven upward by <b>buoyancy</b> (hydrocarbons are lighter than water) and affected by hydrodynamic flow, until a seal and trap stop it.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Why is timing critical in a petroleum play?",
+   "a": "<p>The reservoir, seal and trap must all be formed <b>before</b> hydrocarbons are generated and migrate from the source rock. If the trap forms after migration, the hydrocarbons have probably already escaped to the surface.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Why is hydrocarbon saturation rarely 100%, and how do fluids arrange themselves in a trap?",
+   "a": "<p>Hydrocarbons displace the original water, but some water stays in the pores, often chemically attracted to mineral surfaces. Saturation usually ranges <b>60–90%</b>.</p><p>Fluids separate by density: <b>gas at the top, then oil, then water (brine)</b> at the bottom.</p>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Identify the two main types of petroleum trap and discuss how they are formed.",
+   "a": "<p><b>Stratigraphic traps:</b> formed <b>during deposition</b> of the reservoir beds, e.g. unconformity, lenticular (pinch-out) traps.</p><p><b>Structural traps:</b> created by <b>tectonic processes after deposition</b> of the reservoir beds, e.g. anticline/dome, fault, salt-dome plug traps.</p><p>Many are <b>combination</b> traps, formed by both.</p>",
+   "tip": "<b>Marks:</b> the contrast is \"during deposition\" vs \"after deposition by tectonics\". Add one example of each.",
+   "source": "Class test 2024 Q2(ii) · 4 marks"
+  },
+  {
+   "section": 2,
+   "type": "recall",
+   "q": "Put these exploration terms in order and define each: prospect, discovery, risk map, appraisal, lead.",
+   "a": "<ol><li><b>Risk map</b>: maps of where exploration is more or less likely to succeed, from seismic and outcrop data.</li><li><b>Lead</b>: a specific location worth further investigation (e.g. more detailed seismic).</li><li><b>Prospect</b>: an area worth drilling.</li><li><b>Discovery</b>: a drilled well that finds hydrocarbons.</li><li><b>Appraisal</b>: defining boundaries, fluid contacts, size, shape, reservoir properties and structural complexity. Then economic analysis → development decision.</li></ol>"
+  },
+  {
+   "section": 2,
+   "type": "explain",
+   "q": "Why do all subsurface geological interpretations carry uncertainty?",
+   "a": "<p>Maps and correlations are interpretations by geologists from the available data, so they depend on its quantity and quality, and will change as more data are acquired. A well only samples one location; size and shape are inferred between wells. All conclusions are uncertain, so all exploration carries <b>risk</b>, which must be managed and quantified.</p>"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "Name the three common geophysical methods and what each measures.",
+   "a": "<ul><li><b>Magnetic</b>: anomalies in Earth's magnetic field from the magnetic properties of subsurface rocks.</li><li><b>Gravity</b>: anomalies in Earth's gravity field from subsurface rock <b>density</b>.</li><li><b>Seismic</b>: the <b>time</b> taken for sound waves to travel through rocks.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Can geophysics detect oil directly? When is it the only practical way to explore?",
+   "a": "<p><b>No</b>: no geophysical method directly measures oil in subsurface rocks. It measures sediment thickness and structure shape.</p><p>It usually follows the geological survey and precedes drilling. It confirms structures continue at depth, and is the <b>only practical means</b> where surface structure is absent (swamp, desert, marine) or where surface structure differs markedly from structure at depth.</p>"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "What are reconnaissance and detailed surveys, and which methods are used for each?",
+   "a": "<ul><li><b>Reconnaissance</b>: outline areas with thick sediments and possible structural traps. Gravity and magnetic (and sometimes seismic).</li><li><b>Detailed</b>: define well locations to test specific structures. Almost always seismic.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Describe what is measured by magnetic surveys and identify the rock types that have minerals with magnetic effects.",
+   "a": "<p>Magnetic surveys measure <b>anomalies (slight variations) in Earth's magnetic field</b> caused by the magnetic properties of subsurface rocks.</p><p><b>Igneous and metamorphic</b> rocks (the basement) contain magnetic minerals (e.g. iron). Sedimentary rocks are practically non-magnetic.</p>",
+   "source": "Class test 2024 Q3(i) · 3 marks"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "How can a magnetic survey estimate the thickness of sediment in a basin?",
+   "a": "<p>Sediments are practically non-magnetic, so the anomaly source is the magnetic basement beneath them. Anomaly magnitude depends on <b>distance from its source</b>, so it indicates the thickness of sediment above the basement. Surveys also reveal basement tectonic trends, and detect lava flows and igneous intrusions within sediments (strong magnetic effects).</p>"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "Magnetic survey practicalities: units, field strength, precision, and how errors are controlled.",
+   "a": "<ul><li>Unit: <b>gamma</b>. Field ~60,000 gammas (vertical) at the poles, about half (horizontal) at the equator; very weak (a horseshoe magnet is ~1000× stronger).</li><li>Significant anomalies: a few to a few hundred gammas; magnetometers read to a few hundredths of a gamma.</li><li>A <b>ground magnetometer</b> records continuously to check there are no magnetic storms.</li><li>Corrected for field variations, survey errors and regional effects; contoured into anomaly maps.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "What does a gravity survey measure? How do basement highs, anticline cores and salt domes appear?",
+   "a": "<ul><li>Measures variations in gravity due to <b>density</b> of subsurface rocks.</li><li>Basement is denser than sediment: <b>high gravity</b> where basement is near the surface, <b>low</b> over basement depressions. Outlines basins and structural trends.</li><li>Older, denser rocks brought up in anticline cores: anomalously <b>high</b>.</li><li>Salt is less dense: <b>low</b> gravity over salt domes.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "Gravity survey practicalities: units, sensitivity, corrections and survey layout.",
+   "a": "<ul><li>Gravity varies from 983.221 gal (poles) to 978.048 gal (equator). Anomalies of ~0.001 gal matter, so the unit is the <b>milligal</b>.</li><li>Gravimeters detect 0.01 mGal (one part in a million of Earth's field).</li><li>Instrument height needed at each reading (slow in rough terrain); at sea, a gyroscopically stabilised platform.</li><li>Traverses <b>0.5–1 mile</b> apart; corrections for <b>elevation, latitude, topography and diurnal</b> variation.</li><li>Shapes of structures are unknown during exploration, so gravity data mainly provide <b>leads</b>.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Why are seismic surveys the most used geophysical method? What do they measure, and what are their main outputs?",
+   "a": "<p>They give <b>more detailed information on the shape and depth of structures</b> than any other method.</p><p>Measures travel time from a man-made source to geophones (converted to electric signal, amplified and recorded as a seismogram). Depends on rock density, depth and mineralogy. Rarely over 6 s; measured to 0.001 s.</p><p><b>Outputs:</b></p><ol><li>Image of subsurface structure and stratigraphy</li><li>Rock (and fluid) properties</li><li>Static reservoir geo-model</li><li>Monitoring and updating the dynamic reservoir simulation model</li></ol>"
+  },
+  {
+   "section": 3,
+   "type": "formula",
+   "q": "How are frequency, velocity and wavelength related? What changes when a wave enters a new layer?",
+   "a": "<div class=\"eq\">f = V / λ     (V = f λ)</div><p>Across layers, <b>frequency is conserved</b>; velocity changes, so wavelength changes in proportion.</p>"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "A 30 Hz seismic wave travels at 3000 m/s, then enters a layer where V = 4500 m/s. Find the wavelength in each layer.",
+   "a": "<div class=\"eq\">λ₁ = V₁ / f = 3000 / 30 = <span class=\"res\">100 m</span>\nf is conserved →\nλ₂ = V₂ / f = 4500 / 30 = <span class=\"res\">150 m</span></div>",
+   "hint": "Which quantity stays the same across the interface?"
+  },
+  {
+   "section": 3,
+   "type": "formula",
+   "q": "Give the P-wave velocity equation and define each term. How do P and S waves differ in use?",
+   "a": "<div class=\"eq\">V = √[ (K + 4/3·G) / ρ ]\nK = dP / (dv/v)                 (bulk modulus)\nG = shear stress / shear strain\n  = (F/A) / (transverse displacement / initial length)</div><p>ρ = density, P = pressure, v = volume.</p><p><b>P (primary/pressure) wave</b>: highest velocity, used for seismic interpretation. <b>S (shear) wave</b>: mainly research.</p>"
+  },
+  {
+   "section": 3,
+   "type": "formula",
+   "q": "Write the reflection coefficient and acoustic impedance equations. What does the sign of R tell you?",
+   "a": "<div class=\"eq\">I = V × ρ\nR₁₂ = (I₂ − I₁) / (I₂ + I₁)</div><p>Layer 1 = <b>upper</b> layer (where the wave comes from), layer 2 = <b>lower</b> layer.</p><ul><li>R = fraction of incident energy reflected at the interface.</li><li>I₂ &gt; I₁ → R &gt; 0, <b>positive polarity</b>; I₂ &lt; I₁ → R &lt; 0, negative polarity.</li><li>Polarity changes help identify interfaces and so different rock formations.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "The reflection coefficient at a conglomerate (top) / sandstone (bottom) interface has negative polarity. What is the meaning of this parameter?",
+   "a": "<p>The reflection coefficient tells us <b>how much of the incident energy is reflected back</b> at the interface. Negative polarity means the lower layer (sandstone) has a <b>lower acoustic impedance</b> than the upper layer (conglomerate).</p>",
+   "source": "Past paper 2025 Q1(ii) · 1 mark"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "Calculate R for limestone (top: V = 6.0 km/s, ρ = 2300 kg/m³) over shale (bottom: V = 2.5 km/s, ρ = 2300 kg/m³).",
+   "a": "<div class=\"eq\">I₁ (limestone) = 6.0 × 2300 = 13,800\nI₂ (shale)     = 2.5 × 2300 =  5,750\nR = (5,750 − 13,800) / (5,750 + 13,800)\n  = −8,050 / 19,550 = <span class=\"res\">−0.41</span></div><p>Negative: impedance drops into the shale.</p>",
+   "hint": "Work out I = Vρ for each, then R = (I₂ − I₁)/(I₂ + I₁) with 1 = top.",
+   "source": "Ch 3 tutorial Q1(a)"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "Calculate R for shale (top: V = 2.5 km/s, ρ = 2300 kg/m³) over sandstone (bottom: V = 4.2 km/s, ρ = 2500 kg/m³).",
+   "a": "<div class=\"eq\">I₁ (shale)     = 2.5 × 2300 =  5,750\nI₂ (sandstone) = 4.2 × 2500 = 10,500\nR = (10,500 − 5,750) / (10,500 + 5,750)\n  = 4,750 / 16,250 = <span class=\"res\">+0.29 ≈ +0.3</span></div>",
+   "source": "Ch 3 tutorial Q1(b)"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "Calculate R for limestone (top: V = 6.0 km/s, ρ = 2300 kg/m³) over granite (bottom: V = 5.0 km/s, ρ = 2700 kg/m³). What does the result mean?",
+   "a": "<div class=\"eq\">I₁ (limestone) = 13,800\nI₂ (granite)   = 5.0 × 2700 = 13,500\nR = (13,500 − 13,800) / (13,500 + 13,800)\n  = −300 / 27,300 = <span class=\"res\">−0.01 (almost zero)</span></div><p>The impedances are nearly equal, so almost no energy reflects. The interface would be hard to see on seismic even though the rocks differ.</p>",
+   "source": "Ch 3 tutorial Q1(c)"
+  },
+  {
+   "section": 3,
+   "type": "formula",
+   "q": "How is depth found from two-way time (TWT)? What depth precision does 1 ms give at 4000 m/s?",
+   "a": "<div class=\"eq\">TWT = 2d / V   →   d = V × TWT / 2</div><p>TWT is quoted to the nearest 1 ms (0.001 s). At 4000 m/s: 0.001/2 × 4000 = <b>2 m</b>.</p>"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "What depth is equivalent to a TWT of 0.001 s if the wave velocity in the rock is 6 km/s?",
+   "a": "<div class=\"eq\">d = TWT × V / 2 = 0.001 × 6000 / 2 = <span class=\"res\">3 m</span></div>",
+   "source": "Ch 3 tutorial Q2"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "Calculate the sea-floor depth and the acoustic impedance of the water. TWT = 0.8 s, V(water) = 1000 m/s, ρ(water) = 1000 kg/m³.",
+   "a": "<div class=\"eq\">d = V × TWT / 2 = 1000 × 0.8 / 2 = <span class=\"res\">400 m</span>\nI = V × ρ = 1000 × 1000 = <span class=\"res\">1 × 10⁶ kg/(m²·s)</span></div>",
+   "tip": "<b>Units:</b> impedance is kg/(m²·s). Don't forget the ÷2 for two-way time.",
+   "source": "Class test 2024 Q3(ii) · 4 marks"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "A conglomerate layer reaches a depth of 1565 m (density 2.58 g/cm³). The TWT within the layer is 0.933 s. Calculate the P-wave velocity in the conglomerate.",
+   "a": "<div class=\"eq\">OWT = 0.933 / 2 = 0.4665 s\nV = distance / time = 1565 / 0.4665 = <span class=\"res\">3354.8 m/s</span></div>",
+   "source": "Past paper 2025 Q1(i) · 2 marks"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Rc,s (conglomerate over sandstone) is negative. Comment on the sandstone velocity compared with the conglomerate (3354.8 m/s), then choose: a) 3.15, b) 3.47, c) 3.86 km/s.",
+   "a": "<p><b>Assume</b> the two densities are similar, so polarity is set by the velocity difference. Negative R means I_s &lt; I_c, so <b>V_sandstone &lt; V_conglomerate</b>.</p><p>Only option <b>a) V_s = 3.15 km/s</b> is less than 3.35 km/s.</p>",
+   "tip": "<b>Marks:</b> state the density assumption. It's the assumption that earns the comment marks.",
+   "source": "Past paper 2025 Q1(iii)–(iv) · 2 marks"
+  },
+  {
+   "section": 3,
+   "type": "calc",
+   "q": "With V_c = 3354.8 m/s, ρ_c = 2.58 g/cm³, V_s = 3.15 km/s and Rc,s = −0.063, calculate the sandstone density.",
+   "a": "<div class=\"eq\">−0.063 = (3.15x − 3.3548×2.58) / (3.15x + 3.3548×2.58)\n−0.063 = (3.15x − 8.6553) / (3.15x + 8.6553)\n−0.19845x − 0.54528 = 3.15x − 8.6553\n3.34845x = 8.1100\nx = ρ_s = <span class=\"res\">2.42 g/cm³</span></div>",
+   "hint": "Put ρ_s = x in R = (V_sρ_s − V_cρ_c)/(V_sρ_s + V_cρ_c) and solve the linear equation.",
+   "source": "Past paper 2025 Q1(v) · 2 marks"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "How are geophones laid out in a land reflection survey?",
+   "a": "<ul><li>Groups of geophones at equal spacing, <b>50 or 100 m</b> apart along a line.</li><li><b>24, 48 or 96</b> groups record each shot.</li><li>With 50 m spacing, spread length is <b>1200 m to 4800 m</b> (24 × 50 to 96 × 50).</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "What is seismic 'noise', how is it reduced, and how does CDP shooting work?",
+   "a": "<p>Noise = extraneous ground movements (natural, man-made, and from the shot) that obscure reflections.</p><p><b>Reduced by:</b> varying number and spacing of geophones per group; a pattern of shot holes instead of one shot; electrical filters in amplifiers.</p><p><b>Common depth point (CDP)</b> gives the biggest improvement: shot and geophone stations move along the line between shots, so many records image the <b>same subsurface points</b>. These are added (stacked) in processing: reflections reinforce, random noise cancels. The station shift sets the multiplicity of coverage.</p>"
+  },
+  {
+   "section": 3,
+   "type": "recall",
+   "q": "Distinguish 2-D, 3-D and 4-D seismic surveys.",
+   "a": "<ul><li><b>2-D</b>: acquired along a line; gives cross-sections of the reservoir.</li><li><b>3-D</b>: many parallel lines forming a cube; large oil volume needed to justify the cost.</li><li><b>4-D</b>: 3-D surveys repeated over time; monitors changes in fluid levels and pressure and updates the dynamic simulation model.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Compare land and marine seismic surveys, including the energy sources used.",
+   "a": "<ul><li><b>Land</b>: small explosive charge in a shallow drilled hole; or vibrating plate (Vibroseis truck), which has much less energy but repeated vibrations are summed to improve signal-to-noise. Historically, falling weights.</li><li><b>Marine</b>: non-dynamite sources such as compressed air, gas exploding underwater, or underwater electric discharge, towed behind the ship. One ship tows a neutrally buoyant geophone cable and houses the recorders.</li><li>Marine is <b>faster</b> in good weather (no shot holes, spread moves continuously), so <b>multiplicity of coverage is higher</b> than on land.</li></ul>"
+  },
+  {
+   "section": 3,
+   "type": "explain",
+   "q": "Distinguish isochron, depth-contour and isopach maps. How are the velocities for time-to-depth conversion obtained?",
+   "a": "<ul><li><b>Isochron</b>: contours of equal reflection time, one map per formation. Shows all structure.</li><li><b>Depth-contour</b>: converted with velocities; more convenient for exploration.</li><li><b>Isopach</b>: thickness maps produced from depth conversion.</li></ul><p>Velocity ranges: ~4000 ft/s unconsolidated near-surface; 6000–13,000 ft/s sandstone/shale; 14,000–20,000 ft/s limestone. Velocity variations change contour shape, so each area needs its own velocities.</p><p><b>Obtained by:</b> lowering a geophone into a well and timing shots from the surface; statistical analysis of seismic data (before any well); a continuous velocity log, checked against direct geophone times.</p>"
+  },
+  {
+   "section": 4,
+   "type": "recall",
+   "q": "Define 'reserves'. Who set the accepted definitions?",
+   "a": "<p>Reserves are those quantities of petroleum <b>anticipated to be commercially recovered from known accumulations from a given date forward</b>. All estimates involve uncertainty, depending on the amount of reliable geological and engineering data and its interpretation.</p><p>Definitions published in <b>1987 by the SPE with the World Petroleum Congress</b>, accepted worldwide.</p>"
+  },
+  {
+   "section": 4,
+   "type": "recall",
+   "q": "How are reserves classified by uncertainty?",
+   "a": "<ul><li><b>Proved</b>: most certain.</li><li><b>Unproved</b>, subdivided into <b>probable</b> and then <b>possible</b>, with progressively increasing uncertainty.</li></ul><p>Take care when adding reserves of different classifications, since their uncertainty differs.</p>"
+  },
+  {
+   "section": 4,
+   "type": "explain",
+   "q": "Distinguish deterministic and probabilistic reserve estimation.",
+   "a": "<p><b>Deterministic:</b> a single best estimate from known geological, engineering and economic data.</p><p><b>Probabilistic:</b> the same data generate a <b>range</b> of estimates with associated probabilities, using statistical tools such as <b>Monte Carlo</b> simulation. Both involve some subjectivity.</p>"
+  },
+  {
+   "section": 4,
+   "type": "explain",
+   "q": "Sketch the probabilistic (cumulative) reserves curve and show how proven, probable and possible relate to P90, P50 and P10.",
+   "a": "<svg class=\"sk\" viewBox=\"0 0 440 210\" role=\"img\" aria-label=\"Cumulative probability against recoverable reserves with P90, P50 and P10 marked\">\n<line class=\"ax\" x1=\"50\" y1=\"180\" x2=\"420\" y2=\"180\"/><line class=\"ax\" x1=\"50\" y1=\"180\" x2=\"50\" y2=\"15\"/>\n<path class=\"ln\" d=\"M60 25 C150 28 170 40 200 70 C240 110 260 140 300 165 C330 176 370 178 410 179\"/>\n<line class=\"gd\" x1=\"50\" y1=\"40\" x2=\"175\" y2=\"40\"/><line class=\"gd\" x1=\"175\" y1=\"40\" x2=\"175\" y2=\"180\"/>\n<line class=\"gd\" x1=\"50\" y1=\"100\" x2=\"237\" y2=\"100\"/><line class=\"gd\" x1=\"237\" y1=\"100\" x2=\"237\" y2=\"180\"/>\n<line class=\"gd\" x1=\"50\" y1=\"164\" x2=\"300\" y2=\"164\"/><line class=\"gd\" x1=\"300\" y1=\"164\" x2=\"300\" y2=\"180\"/>\n<text x=\"16\" y=\"44\">90%</text><text x=\"16\" y=\"104\">50%</text><text x=\"16\" y=\"168\">10%</text>\n<text x=\"160\" y=\"196\">P90</text><text x=\"222\" y=\"196\">P50</text><text x=\"286\" y=\"196\">P10</text>\n<text x=\"330\" y=\"205\">reserves →</text><text x=\"54\" y=\"12\">probability ≥ value</text></svg><p>The curve gives the probability that reserves are <b>≥</b> a value.</p><ul><li><b>Proven</b> = P90</li><li><b>Probable</b> = P50 − P90 (so proven + probable = P50)</li><li><b>Possible</b> = P10 − P50 (so proven + probable + possible = P10)</li></ul>",
+   "tip": "<b>Learning outcome:</b> \"show probability vs recoverable reserves\" — label P90 &lt; P50 &lt; P10 along the reserves axis."
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "Initial P10, P50 and P90 values are 825, 550 and 250 MMstb. Calculate the probable and possible reserves.",
+   "a": "<div class=\"eq\">Proven   = P90       = 250 MMstb\nProbable = P50 − P90 = 550 − 250 = <span class=\"res\">300 MMstb</span>\nPossible = P10 − P50 = 825 − 550 = <span class=\"res\">275 MMstb</span></div>",
+   "source": "Class test 2024 Q4(ii) · 3 marks"
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "Before production there was a 90% probability of producing at least 125 MMstb, 50% of 400 MMstb and 10% of 650 MMstb. Complete the table: proved, probable, possible.",
+   "a": "<div class=\"tscroll\"><table><tr><th>Reserves</th><th>MMstb</th></tr><tr><td>Proved (P90)</td><td>125</td></tr><tr><td>Probable (P50 − P90)</td><td>400 − 125 = <span class=\"res\">275</span></td></tr><tr><td>Possible (P10 − P50)</td><td>650 − 400 = <span class=\"res\">250</span></td></tr></table></div>",
+   "tip": "<b>Trap:</b> probable is NOT 400. The P50 value is proved + probable together.",
+   "source": "Past paper 2025 Q3(i) · 3 marks"
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "A field has proven 500, probable 240 and possible 120 MMstb. What are its P90, P50 and P10?",
+   "a": "<div class=\"eq\">P90 = proven = <span class=\"res\">500 MMstb</span>\nP50 = 500 + 240 = <span class=\"res\">740 MMstb</span>\nP10 = 740 + 120 = <span class=\"res\">860 MMstb</span></div>"
+  },
+  {
+   "section": 4,
+   "type": "formula",
+   "q": "Give the volumetric equation for recoverable oil and define every term with units.",
+   "a": "<div class=\"eq\">Recoverable oil = V_b × φ × (1 − S_w) × RF / B_o\nSTOIIP          = V_b × φ × (1 − S_w) / B_o</div><ul><li>V_b: bulk reservoir volume (res bbl)</li><li>φ: fractional porosity</li><li>(1 − S_w): hydrocarbon saturation, assuming only water and hydrocarbon are present</li><li>RF: recovery factor (fraction)</li><li>B_o: oil formation volume factor (res bbl/STB)</li></ul>"
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "Bulk volume = 100 MM bbl, porosity = 20%, S_w = 42%, B_o = 1.7 bbl/STB, RF = 35%. Calculate recoverable oil in STB.",
+   "a": "<div class=\"eq\">Oil in reservoir = 100×10⁶ × 0.2 × (1 − 0.42) = 11.6 MM bbl\nStock-tank oil   = 11.6 / 1.7 = 6.82 MM STB\nRecoverable      = 0.35 × 6.82 = <span class=\"res\">2.39 MM STB</span></div>",
+   "tip": "<b>Trap:</b> divide by B_o (reservoir → stock tank), don't multiply.",
+   "source": "Past paper 2025 Q3(ii) · 3 marks"
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "A field has STOIIP = 1200 MMSTB and RF = 30%. 150 MMstb has already been produced. Calculate the reserves.",
+   "a": "<div class=\"eq\">Ultimate recovery = 1200 × 0.30 = 360 MMstb\nReserves = 360 − 150 (produced) = <span class=\"res\">210 MMstb</span></div>",
+   "tip": "<b>Definition check:</b> reserves are recoverable \"from a given date forward\", so subtract cumulative production.",
+   "source": "Class test 2024 Q4(i) · 2 marks"
+  },
+  {
+   "section": 4,
+   "type": "calc",
+   "q": "V_b = 500 MM res bbl, φ = 25%, S_w = 30%, B_o = 1.25 rb/STB, RF = 40%. Calculate STOIIP and recoverable oil.",
+   "a": "<div class=\"eq\">HC pore volume = 500×10⁶ × 0.25 × 0.70 = 87.5 MM rb\nSTOIIP = 87.5 / 1.25 = <span class=\"res\">70 MMSTB</span>\nRecoverable = 0.40 × 70 = <span class=\"res\">28 MMSTB</span></div>"
+  },
+  {
+   "section": 4,
+   "type": "recall",
+   "q": "What three things are used to estimate the recovery factor?",
+   "a": "<ol><li>Laboratory measurement of oil displacement in cores (the <b>residual oil saturation</b>)</li><li>The type of <b>displacement mechanism</b> involved</li><li>A correlation of <b>sweep efficiency</b> from a similar reservoir</li></ol>"
+  },
+  {
+   "section": 4,
+   "type": "explain",
+   "q": "How do reserve estimates and the probability curve change over the life of a field?",
+   "a": "<ul><li>Reserves become less uncertain as production continues and more reliable data arrive.</li><li>Probabilistic reserves are gradually <b>converted into recovery</b>; the curve narrows, leaving less uncertainty.</li><li>Estimates are revised as new geological/engineering data arrive <b>or economic conditions change</b>.</li><li>Early on, the project must be tested for viability if reserves are much larger or smaller than the central estimate (sensitivity, e.g. Monte Carlo).</li></ul>"
+  },
+  {
+   "section": 4,
+   "type": "explain",
+   "q": "Describe how reserves are estimated at the geophysical exploration, exploration and field development stages.",
+   "a": "<ul><li><b>Geophysical exploration</b>: order-of-magnitude estimate to rank prospects before bidding. Structure volume from seismic maps plus local trends for porous-bed thickness, with typical parameter ranges, gives a possible range.</li><li><b>Exploration (discovery well)</b>: uncertainty of finding hydrocarbons removed; measured porosity and S_w available. If logs agree with seismic, only the <b>oil–water contact</b> is needed for a reasonable estimate.</li><li><b>Field development</b>: new wells define volume, geometry, average φ and S_w more accurately; injection, withdrawals and moving fluid contacts must be accounted for as reserves are continuously updated.</li></ul>"
+  },
+  {
+   "section": 4,
+   "type": "recall",
+   "q": "What typical parameter ranges are used for a reserves range at the geophysical exploration stage?",
+   "a": "<ul><li>Porosity: <b>7% – 30%</b></li><li>Water saturation: <b>8% – 40%</b></li><li>Recovery factor: <b>10% – 50%</b></li></ul>"
+  },
+  {
+   "section": 4,
+   "type": "recall",
+   "q": "How is a volumetric estimate made before any production?",
+   "a": "<p>Geological and geophysical data give contour maps (planimeter etc.) → hydrocarbon-bearing rock volume. Well-log petrophysics gives average porosity and water saturation → <b>STOIIP</b>. Core lab tests estimate how much is movable (recoverable). The final figure is \"little more than an educated guess\", but it drives company policy and project viability, so it is a key task of appraisal.</p>"
+  },
+  {
+   "section": 5,
+   "type": "recall",
+   "q": "What is lithostatic (overburden/geostatic) pressure, and what is its typical gradient onshore and offshore?",
+   "a": "<p>Pressure from the weight of overlying rock, transmitted through <b>grain-to-grain contacts</b>.</p><div class=\"eq\">P_op ≈ 1.0 × D  psig   (D in ft)</div><p>~<b>1 psi/ft</b> onshore. Offshore it may be lower, ~<b>0.7 psi/ft</b>, because of sea water depth, air gap etc. It varies with depth, overburden density and how much water pressure supports the rocks.</p>"
+  },
+  {
+   "section": 5,
+   "type": "explain",
+   "q": "What supports the overburden? Define hydrostatic pressure.",
+   "a": "<ul><li>Overburden is balanced partly by <b>pore (fluid) pressure</b> and partly by the compacted rock grains.</li><li>In unconsolidated (loose) sands the fluid carries all of it: P_f = P_op.</li><li>In reservoir rocks the fluid does not support the rock above; its pressure comes from continuity of water from the surface: <b>hydrostatic pressure</b>.</li><li><b>Hydrostatic pressure</b>: pressure exerted by a column of fluid at rest, set by fluid density and vertical height: P = ρgh. Density depends on salinity.</li></ul>"
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "Write the equation for water pressure in a normally pressured reservoir. What defines 'normally pressured'?",
+   "a": "<div class=\"eq\">p_w = (dp/dD)_w × D + 14.7</div><p>(dp/dD)_w = hydrostatic gradient (psi/ft), D = depth (ft), 14.7 psi = atmospheric.</p><p><b>Normally pressured</b>: the water pressure gradient, extrapolated to zero depth, gives atmospheric pressure. Assumes water continuity to surface and constant salinity.</p>"
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "Write an equation to calculate abnormal pressure and describe its components.",
+   "a": "<div class=\"eq\">p_w = (dp/dD)_w × D + 14.7 + C</div><ul><li>(dp/dD)_w: hydrostatic pressure gradient</li><li>D: depth</li><li>14.7: atmospheric pressure (psi)</li><li>C: constant, <b>positive for overpressured</b>, <b>negative for underpressured</b></li></ul><p>Abnormal pressure needs the sand to be <b>sealed off</b>, with no hydrostatic continuity to the surface.</p>",
+   "source": "Class test 2024 Q5(ii) · 2 marks"
+  },
+  {
+   "section": 5,
+   "type": "explain",
+   "q": "Sketch pressure vs depth showing normal, over- and underpressured reservoirs and the lithostatic line.",
+   "a": "<svg class=\"sk\" viewBox=\"0 0 440 230\" role=\"img\" aria-label=\"Pressure against depth: normal hydrostatic line through 14.7 psi, overpressured line to the right, underpressured to the left, lithostatic line\">\n<line class=\"ax\" x1=\"50\" y1=\"25\" x2=\"420\" y2=\"25\"/><line class=\"ax\" x1=\"50\" y1=\"25\" x2=\"50\" y2=\"215\"/>\n<text x=\"330\" y=\"16\">pressure →</text><text x=\"4\" y=\"225\">depth ↓</text>\n<path class=\"ln\" d=\"M55 25 L230 215\"/><text x=\"200\" y=\"150\">normal (0.433–0.45 psi/ft)</text>\n<path class=\"ln2\" d=\"M90 95 L235 160\"/><text x=\"250\" y=\"168\">over (+C)</text>\n<path class=\"ln3\" d=\"M55 95 L130 175\"/><text x=\"20\" y=\"190\">under (−C)</text>\n<path class=\"gd\" d=\"M50 25 L410 215\" /><text x=\"340\" y=\"200\">lithostatic ~1 psi/ft</text>\n<text x=\"56\" y=\"40\">14.7</text></svg><ul><li>Normal: hydrostatic line through 14.7 psi at the surface.</li><li>Overpressured: parallel offset to higher pressure (+C).</li><li>Underpressured: offset to lower pressure (−C).</li><li>Lithostatic ~1 psi/ft is the upper bound.</li></ul>",
+   "tip": "<b>Learning outcome:</b> \"State, with a schematic sketch, the equations for normal, over and underpressured reservoirs\". Put the equations beside the sketch."
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "How do you convert a fluid density in lb/gal (ppg) to a gradient in psi/ft? What are the key conversions?",
+   "a": "<div class=\"eq\">1 ft³ = 7.48 gal, 1 ft² = 144 in²\n1 ppg = 7.48 / 144 = 0.0519 psi/ft\n1 g/cm³ = 0.433 psi/ft</div><p>Fresh water: 8.34 ppg × 0.0519 = <b>0.433 psi/ft</b>.</p>"
+  },
+  {
+   "section": 5,
+   "type": "recall",
+   "q": "State the typical pressure gradients of reservoir fluids.",
+   "a": "<div class=\"tscroll\"><table><tr><th>Fluid</th><th>g/cm³</th><th>ppg</th><th>psi/ft</th></tr><tr><td>Fresh water</td><td>1.00</td><td>8.34</td><td>0.433</td></tr><tr><td>Salt water</td><td>1.15</td><td>9.59</td><td>0.498</td></tr><tr><td>Oil</td><td>0.80</td><td>6.67</td><td>0.346</td></tr><tr><td>Gas</td><td>0.18</td><td>1.54</td><td>0.080</td></tr></table></div><p>Saline water at 55,000 ppm ≈ 0.45 psi/ft.</p>",
+   "tip": "<b>In the model solutions</b> \"typical gradients\" means <b>water 0.45</b>, <b>oil 0.35</b> psi/ft (gas 0.08). State them as an assumption."
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "Brine has a density of 9.59 ppg. What is its pressure gradient?",
+   "a": "<div class=\"eq\">G = 9.59 × 0.0519 = <span class=\"res\">0.498 psi/ft</span></div>"
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "Give the overburden stress equation and the bulk density equation. What are the limiting cases?",
+   "a": "<div class=\"eq\">s = ∫₀ᶻ ρ_b(z) g dz\ns (psi) = 0.433 ∫₀ᶻ ρ_b(z) dz    (ρ_b in g/cm³, z in ft)\nρ_b = φρ_f + (1 − φ)ρ_m</div><ul><li>φ → 0: ρ_b → ρ_m (matrix). φ → 1: ρ_b → ρ_f (fluid).</li><li>Typical thick sequence: ρ_b ≈ 2.3 g/cm³ ≈ 1 psi/ft.</li></ul>"
+  },
+  {
+   "section": 5,
+   "type": "recall",
+   "q": "State the typical grain densities of common reservoir lithologies.",
+   "a": "<div class=\"tscroll\"><table><tr><th>Lithology</th><th>g/cm³</th><th>Lithology</th><th>g/cm³</th></tr><tr><td>Sandstone</td><td>2.65</td><td>Anhydrite</td><td>2.98</td></tr><tr><td>Limestone</td><td>2.71</td><td>Halite</td><td>2.03</td></tr><tr><td>Dolomite</td><td>2.87</td><td>Gypsum</td><td>2.35</td></tr><tr><td>Clay</td><td>2.70–2.80</td><td></td><td></td></tr></table></div>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "A water-filled sandstone (ρ_m = 2.65 g/cm³, ρ_f = 1.0 g/cm³) has φ = 20% throughout. Estimate the overburden gradient and the overburden stress at 10,000 ft.",
+   "a": "<div class=\"eq\">ρ_b = 0.2 × 1.0 + 0.8 × 2.65 = 2.32 g/cm³\nGradient = 2.32 × 0.433 = <span class=\"res\">1.005 psi/ft</span>\ns = 1.005 × 10,000 ≈ <span class=\"res\">10,050 psi</span></div><p>Consistent with the ~1 psi/ft rule.</p>"
+  },
+  {
+   "section": 5,
+   "type": "explain",
+   "q": "Discuss how geological changes, depletion and thermal effects can cause abnormal fluid pressures in sedimentary basins.",
+   "a": "<ul><li><b>Geological changes</b>: uplift of the reservoir, or surface erosion, can leave the water pressure too high for the current burial depth. Tectonic folding/faulting moves sediment to a depth different from the one its pressure reflects.</li><li><b>Depletion</b>: production from the reservoir (natural or man-made) lowers fluid pressure.</li><li><b>Thermal effects</b>: expansion or contraction of water that cannot escape; a <b>1 °F rise can add 125 psi</b> in a sealed fresh-water system.</li></ul>",
+   "source": "Past paper 2025 Q4(i) · 3 marks"
+  },
+  {
+   "section": 5,
+   "type": "recall",
+   "q": "List six causes of abnormal pore pressure, with one line on each.",
+   "a": "<ol><li><b>Thermal effects</b>: trapped water expands/contracts (1 °F ≈ 125 psi in sealed fresh water).</li><li><b>Clay diagenesis</b>: montmorillonite → illite releases water during compaction; pressure rises if it can't escape.</li><li><b>Osmosis</b>: clay acts as a semi-permeable membrane between different salinities (also electro-osmosis, thermo-osmosis).</li><li><b>Tectonism</b>: folding/faulting moves sediment to a new depth that doesn't match its pressure.</li><li><b>Rapid burial</b> of sand/clay layers: fluids can't escape fast enough.</li><li><b>Depletion</b>: production, natural or man-made.</li></ol>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "A sealed fresh-water sand is heated by 4 °F. Estimate the pressure increase.",
+   "a": "<div class=\"eq\">ΔP ≈ 125 psi/°F × 4 °F = <span class=\"res\">500 psi</span></div>"
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "Give the expressions for pressure in the oil zone and the gas zone of a normally pressured reservoir. What assumptions are made?",
+   "a": "<div class=\"eq\">Water:  p_w(h) = p_surf + ρ_w g h\nOil:    p_o(h) = p_surf + (ρ_w − ρ_o) g x + ρ_o g h\nGas:    p_g(h) = p_surf + (ρ_w − ρ_o) g x + (ρ_o − ρ_g) g y + ρ_g g h\nGas over water (GWC at z):\n        p_g(h) = p_surf + (ρ_w − ρ_g) g z + ρ_g g h</div><p>x = depth of OWC, y = depth of GOC, h = depth of interest. In field units, replace ρg by the gradient (psi/ft) and p_surf by 14.7.</p><p><b>Assumptions:</b> pores filled with water, all interconnected; transition zones small; pressure continuous at contacts (zero capillary pressure); ρ roughly constant with depth.</p>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "A normally pressured reservoir has WOC = 9000 ft, an oil column of 300 ft and a gas column of 600 ft. Assuming zero capillary pressure at the WOC and typical brine and oil gradients, calculate the pressure at the GOC.",
+   "a": "<p>Assume brine = 0.45 psi/ft, oil = 0.35 psi/ft.</p><div class=\"eq\">p(WOC) = 14.7 + 0.45 × 9000 = 4064.7 psi\np(GOC) = 4064.7 − 0.35 × 300 = <span class=\"res\">3959.7 psi</span></div>",
+   "hint": "Work up from the WOC: the GOC is 300 ft shallower.",
+   "tip": "<b>Marks:</b> state the gradients you assumed and the zero-capillary-pressure continuity at the contact.",
+   "source": "Class test 2024 Q5(i) · 3 marks"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "Continuing the last card (GOC at 8700 ft, 3959.7 psi), what is the pressure at the top of the 600 ft gas column?",
+   "a": "<p>Assume gas gradient = 0.08 psi/ft. Top of gas = 8700 − 600 = 8100 ft.</p><div class=\"eq\">p(8100 ft) = 3959.7 − 0.08 × 600 = <span class=\"res\">3911.7 psi</span></div>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "An OWC is found at 9,100 ft TVD. Calculate the pressure at 8,000 ft using typical pressure gradients for water and oil.",
+   "a": "<p>Water = 0.45 psi/ft, oil = 0.35 psi/ft.</p><div class=\"eq\">p_o(h) = p_surf + (G_w − G_o) x + G_o h\n       = 14.7 + (0.45 − 0.35) × 9100 + 0.35 × 8000\n       = 14.7 + 910 + 2800 = <span class=\"res\">3724.7 psia</span></div><p>Check: p(OWC) = 14.7 + 0.45 × 9100 = 4109.7; minus 0.35 × 1100 = 3724.7 ✓</p>",
+   "source": "Past paper 2025 Q4(ii) · 3 marks"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "An RFT in a water zone reads 5000 psi at 9000 ft. Using a 0.45 psi/ft gradient, is the reservoir normally, over- or underpressured? Find C.",
+   "a": "<div class=\"eq\">Normal p = 14.7 + 0.45 × 9000 = 4064.7 psi\nC = 5000 − 4064.7 = <span class=\"res\">+935.3 psi → overpressured</span></div>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "Two RFT readings: 4000.0 psi at 8000 ft and 4035.0 psi at 8100 ft. What fluid is present?",
+   "a": "<div class=\"eq\">Gradient = (4035 − 4000) / (8100 − 8000) = 0.35 psi/ft\nDensity  = 0.35 / 0.433 = 0.81 g/cm³</div><p>Matches <span class=\"res\">oil</span> (0.346 psi/ft). This is how RFT pressure–depth data identify fluid type and contacts.</p>",
+   "hint": "Gradient = Δp/Δh. Compare with the typical gradients table."
+  },
+  {
+   "section": 5,
+   "type": "recall",
+   "q": "List the indirect methods of pore pressure measurement. Why are they qualitative?",
+   "a": "<ul><li>Surface pressures during a <b>kick</b> (no one drills for a kick just to measure)</li><li><b>Log-derived</b> fluid densities</li><li><b>Seismic velocity</b> analysis indicating compaction</li><li><b>Mud density / gas</b> relationship (differential pressure controls formation gas entering the mud)</li><li>Nature and fragmentation of <b>cuttings</b></li><li><b>Drilling exponents</b> (drillability depends on differential pressure)</li><li><b>Shale density</b> trends</li></ul><p>They only <b>indicate</b> pressure; direct methods give quantitative values.</p>"
+  },
+  {
+   "section": 5,
+   "type": "explain",
+   "q": "Describe the RFT as a direct pressure measurement technique and what a pressure-depth survey provides.",
+   "a": "<ul><li>Mid-1950s tools: one sample, one pressure. <b>RFT (1975)</b>: two fluid samples and unlimited pressure points.</li><li>A probe is pushed through the <b>mud cake</b> to take small fluid volumes and measure pressure, so it works only in <b>open hole</b>.</li><li>Set at many depths to give a <b>pressure–depth profile</b>.</li><li>Provides <b>fluid gradients, fluid contacts</b> and reservoir characterisation, improving reservoir management.</li></ul>"
+  },
+  {
+   "section": 5,
+   "type": "formula",
+   "q": "State the typical geothermal gradient and the equation for temperature at depth. Why can reservoir flow be treated as isothermal?",
+   "a": "<div class=\"eq\">Gradient ≈ 1.6 °F / 100 ft  (0.029 K/m)\nT(D) = 288.2 + TG × D   (K, D in m)</div><p>288.2 K = 15 °C (60 °F) surface temperature.</p><ul><li>Large thermal capacity of rock and overburden plus large pore surface area: flow processes occur at <b>constant reservoir temperature</b>.</li><li>Local gradients vary (volcanic intrusions, crustal thickness at ridges, rifts, plate boundaries); measured by wellbore surveys under <b>stabilised</b> conditions (circulating/injected fluids cause transient cooling).</li></ul>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "Estimate the reservoir temperature at 3000 m TVD using a typical geothermal gradient.",
+   "a": "<div class=\"eq\">T = 288.2 + 0.029 × 3000 = <span class=\"res\">375.2 K ≈ 102 °C</span></div>"
+  },
+  {
+   "section": 5,
+   "type": "calc",
+   "q": "Estimate the reservoir temperature at 10,000 ft in °F.",
+   "a": "<div class=\"eq\">T = 60 + 1.6 × (10,000 / 100) = 60 + 160 = <span class=\"res\">220 °F</span></div>"
+  }
+ ]
+}
