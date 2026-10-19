@@ -18,7 +18,7 @@ try{Object.keys(localStorage).filter(k=>k.startsWith("g10ug")||k.startsWith("swi
 
 /* ---------- sanitising imported HTML ---------- */
 const ALLOWED = new Set(["B","STRONG","I","EM","U","P","BR","UL","OL","LI","TABLE","THEAD","TBODY","TR","TD","TH","SUB","SUP","SPAN","DIV","CODE","PRE","SMALL","HR"]);
-const ALLOWED_CLASS = new Set(["eq","res","tscroll"]);
+const ALLOWED_CLASS = new Set(["eq","res","tscroll","math"]);
 function sanitize(html){
   if(!/[<>]/.test(html)) return "<p>"+esc(html).replace(/\n/g,"<br>")+"</p>";
   const doc = new DOMParser().parseFromString("<div>"+html+"</div>","text/html");
@@ -58,6 +58,8 @@ function normalise(raw, id, trusted){
     if(h) card.h=trusted?String(h):plain(h);
     if(tip) card.tip=trusted?String(tip):sanitize(String(tip));
     if(pp) card.pp=trusted?String(pp):plain(pp).slice(0,80);
+    if(c.ref) card.ref=trusted?String(c.ref):plain(c.ref).slice(0,160);
+    if(c.group!=null&&c.group!==""){ card.g=String(c.group).slice(0,40); const pt=parseInt(c.part,10); card.part=pt>0?pt:0; }
     card.id=sec+"-"+hash(card.q);
     cards.push(card);
   }
@@ -102,7 +104,7 @@ function pool(){return D.cards.map((x,i)=>i).filter(i=>{const x=D.cards[i];
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function startDeck(){
   if(!D){renderEmptyLibrary();return}
-  queue=pool(); if(prefs.shuffle)shuffle(queue);
+  queue=orderQueue(pool(),prefs.shuffle);
   total=queue.length; doneCount=0; gotCount=0; flipped=false; streak=0;
   try{localStorage.setItem("sscards-last-deck",D.id)}catch(e){}
   updateTop(); countdown(); render();
@@ -116,12 +118,35 @@ function updateTop(){
   $("subR").textContent=`${known}/${D.cards.length} known · best streak ${best}`;
 }
 
+/* ---------- maths (KaTeX) ---------- */
+function typeset(el){
+  if(!el||!window.renderMathInElement)return;
+  try{renderMathInElement(el,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false,strict:"ignore",trust:false})}catch(e){}
+}
+window.addEventListener("load",()=>{typeset($("stack"))});
+
+/* ---------- multi-part questions ---------- */
+function groupInfo(x){
+  if(!x.g)return null;
+  const all=D.cards.filter(y=>y.g===x.g); if(all.length<2)return null;
+  const sorted=all.slice().sort((a,b)=>(a.part||0)-(b.part||0));
+  return {k:sorted.indexOf(x)+1,n:sorted.length};
+}
+function orderQueue(idx,shuf){
+  // keep parts of the same question together and in order; shuffle whole questions
+  const units=[],byG={};
+  for(const i of idx){const x=D.cards[i]; if(x.g){ if(!byG[x.g]){byG[x.g]=[];units.push(byG[x.g])} byG[x.g].push(i) } else units.push([i])}
+  for(const u of units)u.sort((a,b)=>(D.cards[a].part||0)-(D.cards[b].part||0));
+  if(shuf)shuffle(units);
+  return units.flat();
+}
+
 /* ---------- render ---------- */
 function faceHTML(x,isBack){
   const multi=Object.keys(D.sections).length>1;
-  const tags=`<div class="tags">${multi?`<span class="tag" style="box-shadow:inset 4px 0 0 ${sw(x.c)}">${esc(D.sectionWord)} ${x.c}</span>`:""}<span class="tag">${TYPES[x.t]}</span>${x.pp?`<span class="tag pp">${x.pp}</span>`:""}</div>`;
+  const tags=`<div class="tags">${multi?`<span class="tag" style="box-shadow:inset 4px 0 0 ${sw(x.c)}">${esc(D.sectionWord)} ${x.c}</span>`:""}<span class="tag">${TYPES[x.t]}</span>${x.pp?`<span class="tag pp">${x.pp}</span>`:""}${(()=>{const gi=groupInfo(x);return gi?`<span class="tag part">Part ${gi.k} of ${gi.n}</span>`:""})()}</div>`;
   if(!isBack) return `<div class="band" style="--sw:${sw(x.c)}"></div><div class="inner front">${tags}<p class="q">${x.q}</p>${x.h?`<div class="hint"><b>Hint:</b> ${x.h}</div>`:""}<div class="cue">${x.t==="calc"?"Work it out on paper · tap to check":"Answer out loud · tap to flip"}</div></div>`;
-  return `<div class="band" style="--sw:${sw(x.c)}"></div><div class="inner back"><div class="side">Answer</div><p class="q">${x.q}</p><div class="ans">${x.a}${x.tip?`<div class="tip">${x.tip}</div>`:""}</div><div class="backcue">← still learning · got it →</div></div>`;
+  return `<div class="band" style="--sw:${sw(x.c)}"></div><div class="inner back"><div class="side">Answer</div><p class="q">${x.q}</p><div class="ans">${x.a}${x.tip?`<div class="tip">${x.tip}</div>`:""}</div>${x.ref?`<p class="ref">Source: ${x.ref}</p>`:""}<div class="backcue">← still learning · got it →</div></div>`;
 }
 function renderEmptyLibrary(){
   $("deckName").textContent="No decks yet";
@@ -145,7 +170,7 @@ function render(){
   const c=document.createElement("div"); c.className="card "+(flipped?"back-side":"front-side"); c.id="top"; c.tabIndex=0;
   c.setAttribute("role","button"); c.setAttribute("aria-label",flipped?"Answer side. Swipe right if you got it, left if not.":"Question side. Tap to flip.");
   c.innerHTML=faceHTML(x,flipped)+`<div class="stamp got">GOT IT</div><div class="stamp again">AGAIN</div>`;
-  st.appendChild(c); attachDrag(c);
+  st.appendChild(c); attachDrag(c); typeset(st);
   $("flipLbl").textContent=flipped?"Question":"Flip";
 }
 
@@ -187,7 +212,7 @@ function attachDrag(c){
   const stG=c.querySelector(".stamp.got"),stA=c.querySelector(".stamp.again");
   c.addEventListener("pointerdown",e=>{
     if(busy||(e.pointerType==="mouse"&&e.button!==0))return;
-    if(e.target.closest(".tscroll,.eq"))return;
+    if(e.target.closest(".tscroll,.eq,.math"))return;
     sx=e.clientX;sy=e.clientY;dx=dy=0;mode="pending";id=e.pointerId;t0=Date.now();
   });
   c.addEventListener("pointermove",e=>{
@@ -282,7 +307,7 @@ $("delDeck").onclick=()=>{
 };
 $("openFormulas").onclick=()=>{
   $("fList").innerHTML=D.cards.filter(x=>x.t==="formula").map(x=>`<div class="fitem"><span class="tag" style="align-self:flex-start;box-shadow:inset 4px 0 0 ${sw(x.c)}">${esc(D.sectionWord)} ${x.c}</span><h4>${x.q}</h4><div class="ans">${x.a}</div></div>`).join("");
-  openSheet("formulas")};
+  typeset($("fList")); openSheet("formulas")};
 $("closeFormulas").onclick=closeSheets;
 
 /* ---------- import ---------- */
@@ -297,7 +322,7 @@ Reply with ONLY valid JSON (no other text, no code fences) in exactly this shape
   "sections": { "1": "First chapter title", "2": "Second chapter title" },
   "cards": [
     { "section": 1, "type": "recall", "q": "Question", "a": "Answer" },
-    { "section": 2, "type": "calc", "q": "Question with numbers", "a": "<div class=\\"eq\\">step 1\\nstep 2\\n= <span class=\\"res\\">answer</span></div>", "hint": "optional nudge", "tip": "optional exam tip" }
+    { "section": 2, "type": "calc", "q": "Question with all the data it needs", "a": "<div class=\\"math\\">$$\\\\begin{aligned} x &= ... \\\\\\\\ &= \\\\boxed{...} \\\\end{aligned}$$</div>", "hint": "optional nudge", "tip": "optional exam tip", "ref": "where in the material this comes from", "group": "optional", "part": 1 }
   ]
 }
 
@@ -305,9 +330,12 @@ Rules:
 - At most ${MAX_CARDS} cards. Cover every topic; prioritise what is most likely to be examined.
 - "type" is one of: recall (facts, lists, definitions), explain (discuss/compare/why), calc (worked numerical problems), formula (state an equation and its terms).
 - Phrase questions the way an exam would ask them. Keep answers short, accurate and in my course's terms.
-- "a" can be plain text or simple HTML: <b>, <i>, <p>, <br>, <ul><li>, <ol><li>, <table><tr><td>. Put equations and working in <div class="eq">…</div> using \\n for new lines, and wrap final answers in <span class="res">…</span>.
-- For calc cards, show the full working and check the arithmetic.
-- "exam", "hint", "tip" and "source" (e.g. "Past paper 2024 Q3") are optional; leave out anything you don't know.
+- Use ONLY information from my material. Every answer must be supported by it; add "ref" saying where (e.g. "Lecture 3 slides, Darcy's law" or "Notes §4.2").
+- "a" can be plain text or simple HTML: <b>, <i>, <p>, <br>, <ul><li>, <ol><li>, <table><tr><td>.
+- Write ALL maths in LaTeX so it displays as proper equations: inline as $V = f\\lambda$, and worked steps as <div class="math">$$\\begin{aligned} d &= \\frac{V \\times TWT}{2} \\\\ &= \\boxed{400\\ \\text{m}} \\end{aligned}$$</div>. Box final answers with \\boxed{}. Remember to escape backslashes in JSON (\\frac becomes \\\\frac).
+- For calc cards, show the full working, state assumptions, and check the arithmetic. Each card must make sense on its own: restate any data it needs.
+- For multi-part questions, give every part the same "group" (e.g. "Q3") and a "part" number (1, 2, 3…) so they stay together in order.
+- "exam", "hint", "tip", "source" (e.g. "Past paper 2024 Q3"), "ref", "group" and "part" are optional; leave out anything you don't know.
 - Use plain double quotes and escape any quotes inside text, so the JSON is valid.
 
 Here are my notes:

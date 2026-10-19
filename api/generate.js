@@ -28,7 +28,7 @@ Reply with ONLY valid JSON (no other text, no code fences) in exactly this shape
   "sections": { "1": "First chapter title", "2": "Second chapter title" },
   "cards": [
     { "section": 1, "type": "recall", "q": "Question", "a": "Answer" },
-    { "section": 2, "type": "calc", "q": "Question with numbers", "a": "<div class=\\"eq\\">step 1\\nstep 2\\n= <span class=\\"res\\">answer</span></div>", "hint": "optional nudge", "tip": "optional exam tip", "source": "optional, e.g. Past paper 2024 Q3" }
+    { "section": 2, "type": "calc", "q": "Question with all the data it needs", "a": "<div class=\\"math\\">$$\\\\begin{aligned} x &= ... \\\\\\\\ &= \\\\boxed{...} \\\\end{aligned}$$</div>", "hint": "optional nudge", "tip": "optional exam tip", "source": "optional, e.g. Past paper 2024 Q3", "ref": "where in the material", "group": "optional", "part": 1 }
   ]
 }
 
@@ -37,9 +37,12 @@ Rules:
 - "type" is one of: recall (facts, lists, definitions), explain (discuss/compare/why), calc (worked numerical problems), formula (state an equation and define its terms).
 - If past papers are included, mirror their command words ("Identify", "Discuss", "Calculate", "Sketch") and include their questions with model answers, setting "source".
 - Phrase questions the way an exam would ask them. Keep answers concise, accurate and in the course's own terms. Use only facts supported by the material.
-- "a" can be plain text or simple HTML: <b>, <i>, <p>, <br>, <ul><li>, <ol><li>, <table><tr><td>. Put equations and working in <div class="eq">…</div> using \\n for new lines, and wrap final answers in <span class="res">…</span>.
-- For calc cards, show the full working, state assumptions, and double-check the arithmetic.
-- "exam", "hint", "tip" and "source" are optional; leave out anything you don't know. Never invent an exam date.
+- Every answer must come from the attached material. Add "ref" saying where (e.g. "Lecture 3 slides, Darcy's law" or "Notes §4.2").
+- "a" can be plain text or simple HTML: <b>, <i>, <p>, <br>, <ul><li>, <ol><li>, <table><tr><td>.
+- Write ALL maths in LaTeX so it displays as proper equations: inline as $V = f\\lambda$, and worked steps as <div class="math">$$\\begin{aligned} d &= \\frac{V \\times TWT}{2} \\\\ &= \\boxed{400\\ \\text{m}} \\end{aligned}$$</div>. Box final answers with \\boxed{}. Escape backslashes for JSON.
+- For calc cards, show the full working, state assumptions, and double-check the arithmetic. Each card must make sense on its own: restate any data it needs.
+- For multi-part questions, give every part the same "group" (e.g. "Q3") and a "part" number (1, 2, 3…) so they stay together in order.
+- "exam", "hint", "tip", "source", "ref", "group" and "part" are optional; leave out anything you don't know. Never invent an exam date.
 - Output must be valid JSON: plain double quotes, and escape quotes and backslashes inside strings.`;
 
 function safeEqual(a, b) {

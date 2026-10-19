@@ -8,6 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
 /* Layout: a full-height phone app. Top bar (deck + streak), a swipeable card stack filling the middle, a thumb-reach action bar at the bottom. */
@@ -146,6 +149,13 @@ textarea#impPrompt{min-height:180px}
 .impmsg{font-size:14px;margin:0;color:var(--muted)}
 .impmsg.err{color:var(--ink);background:var(--ochre-bg);border-radius:8px;padding:8px 10px}
 .danger{color:var(--ink);border-color:var(--ink)}
+.math{background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:6px 10px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+.math .katex-display{margin:.35em 0}
+.katex{font-size:1.04em}
+.math .katex{font-size:.92em}
+.ans .katex-display>.katex{text-align:left}
+.ref{font:500 11.5px var(--mono);color:var(--muted);margin:0;border-top:1px dashed var(--line);padding-top:8px}
+.tag.part{background:var(--accent);color:var(--accent-ink)}
 .gen{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface-2)}
 .gen .lbl{margin-bottom:0}
 .genpick{justify-content:center;background:var(--surface)}
@@ -235,6 +245,6 @@ textarea#impPrompt{min-height:180px}
   <div class="body"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Formula sheet</h3><button class="ghost" id="closeFormulas" style="padding:8px 14px">Done</button></div><div id="fList" style="display:flex;flex-direction:column;gap:10px"></div></div>
 </div>
 
-<script src="app.js"></script>
+<script defer src="app.js"></script>
 </body>
 </html>
