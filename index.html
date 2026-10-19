@@ -170,7 +170,7 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
     </div></div>
     <button class="primary" id="startDeck">Start this deck</button>
     <div class="row2"><button class="ghost" id="openFormulas">Formula sheet</button><button class="ghost" id="reset">Reset progress</button></div>
-    <p class="note"><b>How it works:</b> tap to flip. Swipe right if you got it, left if you're still learning it (it comes back a few cards later). Progress is saved on this device only.</p>
+    <p class="note"><b>How it works:</b> tap to flip. Swipe right if you got it, left if you're still learning it (it comes back a few cards later). Progress isn't saved: it resets when you refresh the page or after 3 hours without use.</p>
   </div>
 </div>
 
@@ -585,8 +585,11 @@ const DECKS = [
 /* ---------- storage ---------- */
 function hash(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}return (h>>>0).toString(36)}
 DECKS.forEach(d=>{d.cards.forEach(c=>c.id=c.c+"-"+hash(c.q)); d.storeKey=d.storeKey||("swipe-"+d.id);});
-function load(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
-function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+/* Nothing is saved: progress lives in memory only, so a refresh (or 3 hours idle) starts a fresh session. */
+const MEM={};
+function load(k,d){return Object.prototype.hasOwnProperty.call(MEM,k)?MEM[k]:d}
+function store(k,v){MEM[k]=v}
+try{Object.keys(localStorage).filter(k=>k.startsWith("g10ug")||k.startsWith("swipe")).forEach(k=>localStorage.removeItem(k))}catch(e){}
 const GREYS=["#d6d6d6","#b3b3b3","#919191","#727272","#555555","#c4c4c4","#a2a2a2","#828282"];
 const sw=c=>GREYS[(c-1)%GREYS.length];
 const $=id=>document.getElementById(id);
@@ -783,6 +786,20 @@ function countdown(){
   else if(d===0){$("days").textContent="0";$("daysLbl").textContent="test day"}
   else p.hidden=true;
 }
+
+/* ---------- reset after inactivity ---------- */
+const IDLE_MS=3*60*60*1000;
+let lastActive=Date.now();
+function checkIdle(){
+  if(Date.now()-lastActive>IDLE_MS){
+    for(const k in MEM)delete MEM[k];
+    loadDeck(); streak=0; closeSheets(); startDeck(); toast("New session started");
+  }
+  lastActive=Date.now();
+}
+["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev,checkIdle,{capture:true}));
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkIdle()});
+setInterval(()=>{if(Date.now()-lastActive>IDLE_MS)checkIdle()},60000);
 
 startDeck();
 </script>
