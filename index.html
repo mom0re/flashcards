@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f1f1f1">
 <title>Swipe Study Cards</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,6 +175,17 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
 .nt svg.sk{margin:4px 0 14px}
 .nfoot{margin-top:22px}
 .nfoot .primary{width:100%}
+.nfig{margin:6px 0 18px}
+.nfig img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:zoom-in}
+.nfig figcaption{font:500 12.5px/1.45 var(--mono);color:var(--muted);margin-top:7px}
+.nt .mock{border-left:4px solid var(--accent);background:var(--surface);border-radius:0 10px 10px 0;padding:4px 14px 8px;margin:0 0 14px}
+.nt .mock h4{margin-top:16px}
+.zoom{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.88);overflow:auto;-webkit-overflow-scrolling:touch}
+.zoom .zin{min-height:100%;display:flex;align-items:center;padding:56px 12px 24px}
+.zoom img{width:max(100%,860px);max-width:none;height:auto;background:#fff;border-radius:6px;margin:0 auto}
+.zoom button{position:fixed;top:max(10px,env(safe-area-inset-top,0px));right:12px;z-index:61;background:#fff;color:#1c1c1c;border:0;border-radius:999px;padding:9px 16px;font:600 14px var(--body)}
+.zoom .zhint{position:fixed;top:max(18px,env(safe-area-inset-top,0px));left:14px;color:#fff;font:500 12px var(--mono);opacity:.8}
+
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -237,6 +252,7 @@ textarea#impPrompt{min-height:180px}
   <div class="nscroll" id="nscroll"><div class="nwrap" id="nwrap"></div></div>
 </div>
 
+<div class="zoom" id="zoom" hidden><span class="zhint">Scroll to pan</span><button id="zoomClose">Close</button><div class="zin"><img id="zoomImg" alt=""></div></div>
 <div class="toast" id="toast"></div>
 <div class="scrim" id="scrim"></div>
 

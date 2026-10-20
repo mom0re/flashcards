@@ -241,6 +241,7 @@ function attachDrag(c){
 }
 $("bFlip").onclick=flip; $("bGot").onclick=()=>fly(1); $("bAgain").onclick=()=>fly(-1);
 document.addEventListener("keydown",e=>{
+  if(!$("zoom").hidden){if(e.key==="Escape")closeZoom();return}
   if(!$("notes").hidden){if(e.key==="Escape")closeNotes();return}
   if(document.querySelector(".sheet.on")){if(e.key==="Escape")closeSheets();return}
   if(e.target.closest&&e.target.closest("textarea,input"))return;
@@ -520,6 +521,13 @@ function closeNotes(){$("notes").hidden=true;$("openNotes").focus({preventScroll
 $("openNotes").onclick=()=>openNotes();
 $("menuNotes").onclick=()=>openNotes();
 $("closeNotes").onclick=closeNotes;
+
+/* ---------- tap a figure to zoom ---------- */
+function openZoom(src,alt){$("zoomImg").src=src;$("zoomImg").alt=alt||"";$("zoom").hidden=false;$("zoom").scrollTop=0;$("zoom").scrollLeft=0}
+function closeZoom(){$("zoom").hidden=true;$("zoomImg").removeAttribute("src")}
+$("nwrap").addEventListener("click",e=>{const im=e.target.closest(".nfig img");if(im)openZoom(im.currentSrc||im.src,im.alt)});
+$("zoom").addEventListener("click",e=>{if(e.target.id!=="zoomImg")closeZoom()});
+$("zoomClose").onclick=closeZoom;
 
 /* ---------- boot ---------- */
 async function boot(){
