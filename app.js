@@ -492,6 +492,7 @@ function buildNotes(){
     if(!pool().length)prefs.known=true;startDeck();toast(`${D.sectionWord} ${c} cards`);
   });
   notesBuilt=D.id;
+  typeset(wrap);
 }
 function notesSpy(){
   const sc=$("nscroll"),top=sc.getBoundingClientRect().top+40;
@@ -510,6 +511,7 @@ function openNotes(chap){
   closeSheets();
   if(notesBuilt!==D.id)buildNotes();
   $("notes").hidden=false;
+  typeset($("nwrap"));
   const sc=$("nscroll");sc.style.scrollBehavior="auto";
   const sv=notesPos&&notesPos.id===D.id?notesPos:null;
   if(chap){const s=$("nch-"+chap);if(s)sc.scrollTop=s.offsetTop-sc.querySelector(".nwrap").offsetTop}
