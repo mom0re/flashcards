@@ -114,7 +114,6 @@ function startDeck(){
 function updateTop(){
   $("openNotes").hidden=!(D&&D.notes);
   $("deckName").textContent=D.short+(prefs.ch&&Object.keys(D.sections).length>1?` · ${D.sectionWord} ${prefs.ch}`:"")+(prefs.pp?" · past papers":"");
-  $("streak").textContent=streak; $("streakPill").classList.toggle("hot",streak>=5);
   $("progBar").style.width=total?(100*doneCount/total)+"%":"0%";
   const known=D.cards.filter(x=>marks[x.id]==="got").length;
   $("subL").textContent=total?`${doneCount}/${total} cleared`:"";
@@ -198,7 +197,6 @@ function commit(dir){
   if(dir===1){
     marks[x.id]="got"; doneCount++; gotCount++; streak++;
     if(streak>best){best=streak;saveBest()}
-    $("streakPill").classList.remove("pop"); void $("streakPill").offsetWidth; $("streakPill").classList.add("pop");
     buzz(12);
     if(streak%10===0)toast(`${streak} in a row`);
     else if(doneCount===Math.ceil(total/2)&&total>=10)toast("Halfway through the deck");
