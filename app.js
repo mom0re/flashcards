@@ -68,7 +68,9 @@ function normalise(raw, id, trusted){
   let name=String(raw.name||raw.title||"My deck").slice(0,60);
   let short=String(raw.short||name).slice(0,28);
   const exam=/^\d{4}-\d{2}-\d{2}$/.test(raw.exam||"")?raw.exam:"";
-  return {id,name,short,exam,sectionWord:String(raw.sectionWord||"Section").slice(0,16),sections,cards,user:!trusted,skipped};
+  let notes=null;
+  if(trusted&&raw.notes&&typeof raw.notes==="object"){notes={};for(const [k,v] of Object.entries(raw.notes)){const n=parseInt(k,10);if(n>0&&typeof v==="string"&&v)notes[n]=v}if(!Object.keys(notes).length)notes=null}
+  return {id,name,short,exam,sectionWord:String(raw.sectionWord||"Section").slice(0,16),sections,cards,notes,user:!trusted,skipped};
 }
 function extractJSON(text){
   text=String(text).trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");
@@ -110,6 +112,7 @@ function startDeck(){
   updateTop(); countdown(); render();
 }
 function updateTop(){
+  $("openNotes").hidden=!(D&&D.notes);
   $("deckName").textContent=D.short+(prefs.ch&&Object.keys(D.sections).length>1?` · ${D.sectionWord} ${prefs.ch}`:"")+(prefs.pp?" · past papers":"");
   $("streak").textContent=streak; $("streakPill").classList.toggle("hot",streak>=5);
   $("progBar").style.width=total?(100*doneCount/total)+"%":"0%";
@@ -240,6 +243,7 @@ function attachDrag(c){
 }
 $("bFlip").onclick=flip; $("bGot").onclick=()=>fly(1); $("bAgain").onclick=()=>fly(-1);
 document.addEventListener("keydown",e=>{
+  if(!$("notes").hidden){if(e.key==="Escape")closeNotes();return}
   if(document.querySelector(".sheet.on")){if(e.key==="Escape")closeSheets();return}
   if(e.target.closest&&e.target.closest("textarea,input"))return;
   if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="bFlip")return;e.preventDefault();flip()}
@@ -288,6 +292,7 @@ function buildMenu(){
   $("oPP").hidden=!D.cards.some(x=>x.pp);
   $("oPP").setAttribute("aria-pressed",String(prefs.pp)); $("oKnown").setAttribute("aria-pressed",String(prefs.known)); $("oShuffle").setAttribute("aria-pressed",String(prefs.shuffle));
   $("openFormulas").hidden=!D.cards.some(x=>x.t==="formula");
+  $("menuNotes").hidden=!D.notes;
   $("delDeck").hidden=!D.user; $("delDeck").textContent="Delete this deck"; delArmed=false;
   const n=pool().length; $("startDeck").textContent=n?`Start ${n} card${n===1?"":"s"}`:"No cards match";
   $("startDeck").disabled=!n;
@@ -466,6 +471,57 @@ window.__ssIdle=v=>{lastActive=v};
 ["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev,checkIdle,{capture:true}));
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkIdle()});
 setInterval(()=>{if(Date.now()-lastActive>IDLE_MS)checkIdle()},60000);
+
+/* ---------- notes view ---------- */
+let notesBuilt=null,notesPos=null;
+function buildNotes(){
+  const wrap=$("nwrap"),chips=$("nchips");
+  wrap.innerHTML="";chips.innerHTML="";
+  const chs=Object.keys(D.sections).map(Number).filter(c=>D.notes&&D.notes[c]);
+  $("notesTitle").textContent=D.short+" notes";
+  for(const c of chs){
+    const sec=document.createElement("section");sec.className="nch";sec.id="nch-"+c;sec.style.setProperty("--sw",sw(c));
+    sec.innerHTML=`<div class="nhead"><div class="nnum">${D.sectionWord} ${c}</div><h2>${esc(D.sections[c])}</h2></div><div class="ntoc"><div class="lbl">In this chapter</div></div><div class="nt">${D.notes[c]}</div><div class="nfoot"><button class="primary" data-study="${c}">Practise ${D.sectionWord.toLowerCase()} ${c} cards</button></div>`;
+    wrap.appendChild(sec);
+    const toc=sec.querySelector(".ntoc");
+    sec.querySelectorAll(".nt h3").forEach((h,i)=>{h.id=`n${c}-${i}`;const a=document.createElement("a");a.href="#"+h.id;a.textContent=h.textContent;a.onclick=e=>{e.preventDefault();h.scrollIntoView({block:"start"})};toc.appendChild(a)});
+    const b=document.createElement("button");b.className="nchip";b.textContent=`${c}. ${D.sections[c]}`;b.dataset.ch=c;
+    b.onclick=()=>{sec.scrollIntoView({block:"start"})};chips.appendChild(b);
+  }
+  wrap.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
+    const c=+b.dataset.study;closeNotes();prefs.ch=c;prefs.types=[];prefs.pp=false;
+    if(!pool().length)prefs.known=true;startDeck();toast(`${D.sectionWord} ${c} cards`);
+  });
+  notesBuilt=D.id;
+}
+function notesSpy(){
+  const sc=$("nscroll"),top=sc.getBoundingClientRect().top+40;
+  let cur=null;
+  document.querySelectorAll(".nch").forEach(s=>{if(s.getBoundingClientRect().top<=top)cur=s.id.slice(4)});
+  if(!cur){const f=document.querySelector(".nch");cur=f&&f.id.slice(4)}
+  let on=null;
+  $("nchips").querySelectorAll(".nchip").forEach(b=>{const is=b.dataset.ch===cur;b.setAttribute("aria-current",String(is));if(is)on=b});
+  if(on){const bar=$("nchips");const l=on.offsetLeft-bar.clientWidth/2+on.offsetWidth/2;bar.scrollTo({left:l})}
+  notesPos={id:D.id,top:sc.scrollTop};
+}
+let spyT=null;
+$("nscroll").addEventListener("scroll",()=>{clearTimeout(spyT);spyT=setTimeout(notesSpy,80)},{passive:true});
+function openNotes(chap){
+  if(!D.notes)return;
+  closeSheets();
+  if(notesBuilt!==D.id)buildNotes();
+  $("notes").hidden=false;
+  const sc=$("nscroll");sc.style.scrollBehavior="auto";
+  const sv=notesPos&&notesPos.id===D.id?notesPos:null;
+  if(chap){const s=$("nch-"+chap);if(s)sc.scrollTop=s.offsetTop-sc.querySelector(".nwrap").offsetTop}
+  else if(sv&&typeof sv.top==="number")sc.scrollTop=sv.top;
+  else sc.scrollTop=0;
+  sc.style.scrollBehavior="";notesSpy();$("closeNotes").focus({preventScroll:true});
+}
+function closeNotes(){$("notes").hidden=true;$("openNotes").focus({preventScroll:true})}
+$("openNotes").onclick=()=>openNotes();
+$("menuNotes").onclick=()=>openNotes();
+$("closeNotes").onclick=closeNotes;
 
 /* ---------- boot ---------- */
 async function boot(){

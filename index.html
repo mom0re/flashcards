@@ -131,6 +131,45 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
 .note{font-size:13px;color:var(--muted);margin:0}
 .fitem{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
 .fitem h4{margin:0;font:600 14.5px var(--body)}
+/* notes: long-form reading view */
+.iconbtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.iconbtn svg{width:20px;height:20px}
+.notes{position:fixed;inset:0;z-index:45;background:var(--bg);display:flex;flex-direction:column}
+.nbar{flex:none;background:var(--surface);border-bottom:1px solid var(--line);padding-top:max(8px,env(safe-area-inset-top,0px))}
+.nbar .row{display:flex;align-items:center;gap:10px;max-width:720px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-left,0px)) 8px}
+.nbar h1{margin:0;font:800 18px var(--display);font-stretch:112%;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nchips{display:flex;gap:8px;overflow-x:auto;padding:0 max(14px,env(safe-area-inset-left,0px)) 10px;max-width:720px;margin:0 auto;scrollbar-width:none}
+.nchips::-webkit-scrollbar{display:none}
+.nchip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font:600 13px var(--body);white-space:nowrap}
+.nchip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.nscroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scroll-behavior:smooth}
+.nwrap{max-width:720px;margin:0 auto;padding:18px max(18px,env(safe-area-inset-left,0px)) calc(60px + env(safe-area-inset-bottom,0px))}
+.nch{padding-bottom:34px;margin-bottom:30px;border-bottom:1px solid var(--line)}
+.nch:last-child{border-bottom:0}
+.nhead{border-left:8px solid var(--sw);padding:2px 0 2px 14px;margin-bottom:14px}
+.nnum{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.nhead h2{margin:2px 0 0;font:800 clamp(26px,7vw,34px) var(--display);font-stretch:112%;line-height:1.1;text-wrap:balance}
+.ntoc{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;margin:0 0 16px}
+.ntoc .lbl{margin-bottom:6px}
+.ntoc a{display:block;color:var(--ink);text-decoration:none;padding:5px 0;font-size:14.5px;border-top:1px solid var(--line)}
+.ntoc a:first-of-type{border-top:0}
+.nt{font-size:16px;line-height:1.62;overflow-wrap:break-word}
+.nt h3{font:800 22px var(--display);font-stretch:108%;margin:30px 0 8px;padding-top:6px;scroll-margin-top:12px;border-top:1px solid var(--line)}
+.nt h4{font:700 15px var(--body);margin:20px 0 6px;color:var(--ochre);scroll-margin-top:12px}
+.nt p{margin:0 0 12px}
+.nt .lede{font-size:17px;color:var(--ink)}
+.nt ul,.nt ol{margin:0 0 14px;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.nt .tscroll{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.nt table{border-collapse:collapse;font-size:14px;width:100%;min-width:420px}
+.nt td,.nt th{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.nt th{background:var(--surface-2);font-weight:600}
+.nt tr:last-child td{border-bottom:0}.nt td:last-child,.nt th:last-child{border-right:0}
+.nt .eq{margin:0 0 14px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.nt .tip,.nt .def{margin:0 0 14px;line-height:1.55}
+.nt .def{font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.nt svg.sk{margin:4px 0 14px}
+.nfoot{margin-top:22px}
+.nfoot .primary{width:100%}
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -176,6 +215,7 @@ textarea#impPrompt{min-height:180px}
 <div class="app" id="app">
   <div class="top">
     <button class="deckbtn" id="openMenu" aria-label="Choose a deck"><span class="sw" id="deckSw"></span><span class="t" id="deckName">Loading…</span><span class="chev">▼</span></button>
+    <button class="iconbtn" id="openNotes" aria-label="Read chapter notes" title="Chapter notes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg></button>
     <div class="pill" id="streakPill"><b id="streak">0</b><small>streak</small></div>
     <div class="pill"><b id="days">–</b><small id="daysLbl">days</small></div>
   </div>
@@ -187,6 +227,14 @@ textarea#impPrompt{min-height:180px}
     <button class="act flip" id="bFlip"><span class="ic">↻</span><span id="flipLbl">Flip</span></button>
     <button class="act got" id="bGot" aria-label="Got it"><span class="ic">✓</span>Got it</button>
   </div>
+</div>
+
+<div class="notes" id="notes" role="dialog" aria-label="Chapter notes" hidden>
+  <div class="nbar">
+    <div class="row"><h1 id="notesTitle">Notes</h1><button class="ghost" id="closeNotes" style="padding:8px 14px">Done</button></div>
+    <div class="nchips" id="nchips"></div>
+  </div>
+  <div class="nscroll" id="nscroll"><div class="nwrap" id="nwrap"></div></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -205,7 +253,7 @@ textarea#impPrompt{min-height:180px}
       <button class="chip" id="oShuffle" aria-pressed="true">Shuffle</button>
     </div></div>
     <button class="primary" id="startDeck">Start this deck</button>
-    <div class="row2" id="menuRow"><button class="ghost" id="openFormulas">Formula sheet</button><button class="ghost" id="reset">Reset progress</button><button class="ghost danger" id="delDeck" hidden>Delete this deck</button></div>
+    <div class="row2" id="menuRow"><button class="ghost" id="menuNotes">Read notes</button><button class="ghost" id="openFormulas">Formula sheet</button><button class="ghost" id="reset">Reset progress</button><button class="ghost danger" id="delDeck" hidden>Delete this deck</button></div>
     <p class="note"><b>How it works:</b> tap to flip. Swipe right if you got it, left if you're still learning it (it comes back a few cards later). Progress isn't saved: it resets when you refresh or after 3 hours without use. Decks you add stay on this phone until you delete them.</p>
   </div>
 </div>
