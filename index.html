@@ -188,6 +188,31 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
 .zoom button{position:fixed;top:max(10px,env(safe-area-inset-top,0px));right:12px;z-index:61;background:#fff;color:#1c1c1c;border:0;border-radius:999px;padding:9px 16px;font:600 14px var(--body)}
 .zoom .zhint{position:fixed;top:max(18px,env(safe-area-inset-top,0px));left:14px;color:#fff;font:500 12px var(--mono);opacity:.8}
 
+.nbody{flex:1;min-height:0;display:flex}
+.nrail{display:none}
+/* Laptop / big tablet: notes (main) and flashcards side by side */
+@media (min-width:1024px){
+ :root{--cw:clamp(400px,30vw,460px)}
+ body.split .app{position:fixed;top:0;right:0;bottom:0;width:var(--cw);max-width:none;margin:0;height:auto;border-left:1px solid var(--line);background:var(--bg);padding:14px 18px 16px}
+ body.split .notes{inset:0 var(--cw) 0 0;z-index:1}
+ body.split #openNotes,body.split #closeNotes,body.split #menuNotes{display:none}
+ body.split .sheet{left:auto;right:0;width:var(--cw);max-width:none;margin:0;border-radius:20px 0 0 0}
+ body.split .nbar .row{max-width:none;padding:0 28px 12px}
+ body.split .nwrap{max-width:880px;padding:30px 44px 90px}
+ body.split .nt{font-size:17px;line-height:1.7}
+ body.split .nt .lede{font-size:18px}
+ body.split .nhead h2{font-size:40px}
+}
+@media (min-width:1280px){
+ body.split .nchips{display:none}
+ body.split .nrail{display:block;width:260px;flex:none;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);padding:14px 12px 40px}
+ .nrail .rc{display:flex;align-items:center;gap:8px;font:700 13.5px var(--body);margin:16px 0 4px;cursor:pointer;color:var(--ink)}
+ .nrail .rc .dot{width:12px;height:12px;border-radius:3px;flex:none}
+ .nrail .rc.on{text-decoration:underline;text-underline-offset:4px}
+ .nrail a.rs{display:block;font-size:13px;line-height:1.35;color:var(--muted);padding:4px 8px 4px 20px;border-left:2px solid transparent;text-decoration:none;cursor:pointer}
+ .nrail a.rs:hover{color:var(--ink)}
+ .nrail a.rs.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
+}
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -251,7 +276,7 @@ textarea#impPrompt{min-height:180px}
     <div class="row"><h1 id="notesTitle">Notes</h1><button class="ghost" id="closeNotes" style="padding:8px 14px">Done</button></div>
     <div class="nchips" id="nchips"></div>
   </div>
-  <div class="nscroll" id="nscroll"><div class="nwrap" id="nwrap"></div></div>
+  <div class="nbody"><nav class="nrail" id="nrail" aria-label="Contents"></nav><div class="nscroll" id="nscroll"><div class="nwrap" id="nwrap"></div></div></div>
 </div>
 
 <div class="zoom" id="zoom" hidden><span class="zhint">Scroll to pan</span><button id="zoomClose">Close</button><div class="zin"><img id="zoomImg" alt=""></div></div>

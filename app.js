@@ -113,6 +113,7 @@ function startDeck(){
 }
 function updateTop(){
   $("openNotes").hidden=!(D&&D.notes);
+  syncLayout();
   $("deckName").textContent=D.short+(prefs.ch&&Object.keys(D.sections).length>1?` · ${D.sectionWord} ${prefs.ch}`:"")+(prefs.pp?" · past papers":"");
   $("progBar").style.width=total?(100*doneCount/total)+"%":"0%";
   const known=D.cards.filter(x=>marks[x.id]==="got").length;
@@ -242,7 +243,8 @@ function attachDrag(c){
 $("bFlip").onclick=flip; $("bGot").onclick=()=>fly(1); $("bAgain").onclick=()=>fly(-1);
 document.addEventListener("keydown",e=>{
   if(!$("zoom").hidden){if(e.key==="Escape")closeZoom();return}
-  if(!$("notes").hidden){if(e.key==="Escape")closeNotes();return}
+  if(!$("notes").hidden&&!isSplit()){if(e.key==="Escape")closeNotes();return}
+  if(isSplit()&&e.target.closest&&e.target.closest("#notes"))return;
   if(document.querySelector(".sheet.on")){if(e.key==="Escape")closeSheets();return}
   if(e.target.closest&&e.target.closest("textarea,input"))return;
   if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="bFlip")return;e.preventDefault();flip()}
@@ -476,6 +478,7 @@ let notesBuilt=null,notesPos=null;
 function buildNotes(){
   const wrap=$("nwrap"),chips=$("nchips");
   wrap.innerHTML="";chips.innerHTML="";
+  const rail=$("nrail");rail.innerHTML="";
   const chs=Object.keys(D.sections).map(Number).filter(c=>D.notes&&D.notes[c]);
   $("notesTitle").textContent=D.short+" notes";
   for(const c of chs){
@@ -484,6 +487,8 @@ function buildNotes(){
     wrap.appendChild(sec);
     const toc=sec.querySelector(".ntoc");
     sec.querySelectorAll(".nt h3").forEach((h,i)=>{h.id=`n${c}-${i}`;const a=document.createElement("a");a.href="#"+h.id;a.textContent=h.textContent;a.onclick=e=>{e.preventDefault();h.scrollIntoView({block:"start"})};toc.appendChild(a)});
+    const rc=document.createElement("div");rc.className="rc";rc.dataset.ch=c;rc.innerHTML=`<span class="dot" style="background:${sw(c)}"></span><span>${c}. ${esc(D.sections[c])}</span>`;rc.onclick=()=>sec.scrollIntoView({block:"start"});rail.appendChild(rc);
+    sec.querySelectorAll(".nt h3").forEach(h=>{const ra=document.createElement("a");ra.className="rs";ra.dataset.id=h.id;ra.textContent=h.textContent;ra.onclick=()=>h.scrollIntoView({block:"start"});rail.appendChild(ra)});
     const b=document.createElement("button");b.className="nchip";b.textContent=`${c}. ${D.sections[c]}`;b.dataset.ch=c;
     b.onclick=()=>{sec.scrollIntoView({block:"start"})};chips.appendChild(b);
   }
@@ -502,6 +507,9 @@ function notesSpy(){
   let on=null;
   $("nchips").querySelectorAll(".nchip").forEach(b=>{const is=b.dataset.ch===cur;b.setAttribute("aria-current",String(is));if(is)on=b});
   if(on){const bar=$("nchips");const l=on.offsetLeft-bar.clientWidth/2+on.offsetWidth/2;bar.scrollTo({left:l})}
+  let curH=null;document.querySelectorAll(".nt h3").forEach(h=>{if(h.getBoundingClientRect().top<=top+20)curH=h.id});
+  document.querySelectorAll("#nrail .rc").forEach(r=>r.classList.toggle("on",r.dataset.ch===cur));
+  document.querySelectorAll("#nrail .rs").forEach(r=>{const is=r.dataset.id===curH;r.classList.toggle("on",is);if(is&&isSplit())r.scrollIntoView({block:"nearest"})});
   notesPos={id:D.id,top:sc.scrollTop};
 }
 let spyT=null;
@@ -517,9 +525,25 @@ function openNotes(chap){
   if(chap){const s=$("nch-"+chap);if(s)sc.scrollTop=s.offsetTop-sc.querySelector(".nwrap").offsetTop}
   else if(sv&&typeof sv.top==="number")sc.scrollTop=sv.top;
   else sc.scrollTop=0;
-  sc.style.scrollBehavior="";notesSpy();$("closeNotes").focus({preventScroll:true});
+  sc.style.scrollBehavior="";notesSpy();if(!isSplit())$("closeNotes").focus({preventScroll:true});
 }
-function closeNotes(){$("notes").hidden=true;$("openNotes").focus({preventScroll:true})}
+function closeNotes(){if(isSplit())return;$("notes").hidden=true;$("openNotes").focus({preventScroll:true})}
+/* laptop layout: at >=1024px the notes stay open beside the flashcards */
+const mqSplit=window.matchMedia("(min-width:1024px)");
+function isSplit(){return document.body.classList.contains("split")}
+function syncLayout(){
+  const want=mqSplit.matches&&!!(D&&D.notes),was=isSplit();
+  if(want===was&&(!want||notesBuilt===D.id))return;
+  document.body.classList.toggle("split",want);
+  if(want){
+    if(notesBuilt!==D.id)buildNotes();
+    $("notes").hidden=false;typeset($("nwrap"));
+    const sc=$("nscroll"),sv=notesPos&&notesPos.id===D.id?notesPos:null;
+    sc.style.scrollBehavior="auto";sc.scrollTop=sv?sv.top:0;sc.style.scrollBehavior="";
+    notesSpy();
+  }else if(was){$("notes").hidden=true}
+}
+mqSplit.addEventListener("change",syncLayout);
 $("openNotes").onclick=()=>openNotes();
 $("menuNotes").onclick=()=>openNotes();
 $("closeNotes").onclick=closeNotes;
