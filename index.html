@@ -213,6 +213,16 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
  .nrail a.rs:hover{color:var(--ink)}
  .nrail a.rs.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
 }
+/* notes search (find in page) */
+.nsearch{flex:none;display:flex;align-items:center;gap:6px;background:var(--surface);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.nsearch input{flex:1;min-width:0;height:42px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);padding:0 14px;font:16px var(--body);color:var(--ink);-webkit-appearance:none;appearance:none}
+.nsearch input:focus{outline:2px solid var(--accent);outline-offset:1px;background:var(--surface)}
+.nscount{flex:none;font:500 12px var(--mono);color:var(--muted);min-width:46px;text-align:center;font-variant-numeric:tabular-nums}
+.nsearch button{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center}
+.nsearch button svg{width:20px;height:20px}
+.nsearch button:disabled{opacity:.35}
+mark.hit{background:#ffe066;color:#1c1c1c;border-radius:2px;padding:0 1px;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+mark.hit.cur{background:#ff9f43;box-shadow:0 0 0 2px #1c1c1c}
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -277,6 +287,12 @@ textarea#impPrompt{min-height:180px}
     <div class="nchips" id="nchips"></div>
   </div>
   <div class="nbody"><nav class="nrail" id="nrail" aria-label="Contents"></nav><div class="nscroll" id="nscroll"><div class="nwrap" id="nwrap"></div></div></div>
+  <div class="nsearch" id="nsearch" role="search">
+    <input id="nsInput" type="search" placeholder="Search the notes" aria-label="Search the notes" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <span class="nscount" id="nsCount" aria-live="polite"></span>
+    <button id="nsPrev" aria-label="Previous match" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+    <button id="nsNext" aria-label="Next match" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+  </div>
 </div>
 
 <div class="zoom" id="zoom" hidden><span class="zhint">Scroll to pan</span><button id="zoomClose">Close</button><div class="zin"><img id="zoomImg" alt=""></div></div>

@@ -498,6 +498,7 @@ function buildNotes(){
   });
   notesBuilt=D.id;
   typeset(wrap);
+  $("nsInput").value="";nsHits=[];nsCur=-1;$("nsCount").textContent="";$("nsPrev").disabled=$("nsNext").disabled=true;
 }
 function notesSpy(){
   const sc=$("nscroll"),top=sc.getBoundingClientRect().top+40;
@@ -527,7 +528,7 @@ function openNotes(chap){
   else sc.scrollTop=0;
   sc.style.scrollBehavior="";notesSpy();if(!isSplit())$("closeNotes").focus({preventScroll:true});
 }
-function closeNotes(){if(isSplit())return;$("notes").hidden=true;$("openNotes").focus({preventScroll:true})}
+function closeNotes(){if(isSplit())return;$("nsInput").blur();nsClearMarks();$("nsInput").value="";$("nsCount").textContent="";$("nsPrev").disabled=$("nsNext").disabled=true;$("notes").hidden=true;fitNotesToViewport();$("openNotes").focus({preventScroll:true})}
 /* laptop layout: at >=1024px the notes stay open beside the flashcards */
 const mqSplit=window.matchMedia("(min-width:1024px)");
 function isSplit(){return document.body.classList.contains("split")}
@@ -547,6 +548,70 @@ mqSplit.addEventListener("change",syncLayout);
 $("openNotes").onclick=()=>openNotes();
 $("menuNotes").onclick=()=>openNotes();
 $("closeNotes").onclick=closeNotes;
+
+
+/* ---------- search the notes (live, like find-in-page) ---------- */
+let nsHits=[],nsCur=-1,nsT=null;
+function nsClearMarks(){
+  const w=$("nwrap");
+  w.querySelectorAll("mark.hit").forEach(m=>{const p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize()});
+  nsHits=[];nsCur=-1;
+}
+function nsRun(){
+  const q=$("nsInput").value.trim(),w=$("nwrap");
+  nsClearMarks();
+  $("nsPrev").disabled=$("nsNext").disabled=true;
+  if(q.length<2){$("nsCount").textContent=q.length?"2+ letters":"";return}
+  const needle=q.toLowerCase();
+  const walker=document.createTreeWalker(w,NodeFilter.SHOW_TEXT,{acceptNode(n){
+    if(!n.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+    const p=n.parentElement;
+    if(!p||p.closest(".katex,.ntoc,.nfoot,script,style,mark.hit"))return NodeFilter.FILTER_REJECT;
+    return NodeFilter.FILTER_ACCEPT}});
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  const MAX=1000;let total=0;
+  for(const node of nodes){
+    if(total>=MAX)break;
+    const text=node.nodeValue,low=text.toLowerCase(),idx=[];
+    let i=low.indexOf(needle);
+    while(i!==-1&&total+idx.length<MAX){idx.push(i);i=low.indexOf(needle,i+needle.length)}
+    if(!idx.length)continue;
+    const frag=document.createDocumentFragment();let last=0;
+    for(const s of idx){
+      if(s>last)frag.appendChild(document.createTextNode(text.slice(last,s)));
+      const m=document.createElement("mark");m.className="hit";m.textContent=text.slice(s,s+needle.length);frag.appendChild(m);nsHits.push(m);last=s+needle.length;
+    }
+    if(last<text.length)frag.appendChild(document.createTextNode(text.slice(last)));
+    node.parentNode.replaceChild(frag,node);total+=idx.length;
+  }
+  if(!nsHits.length){$("nsCount").textContent="No matches";return}
+  $("nsPrev").disabled=$("nsNext").disabled=nsHits.length<2;
+  nsGo(0,false);
+}
+function nsGo(i,focusInput){
+  if(!nsHits.length)return;
+  if(nsCur>=0&&nsHits[nsCur])nsHits[nsCur].classList.remove("cur");
+  nsCur=(i+nsHits.length)%nsHits.length;
+  const m=nsHits[nsCur];m.classList.add("cur");
+  const sc=$("nscroll");sc.style.scrollBehavior="auto";
+  m.scrollIntoView({block:"center",inline:"nearest"});
+  sc.style.scrollBehavior="";
+  $("nsCount").textContent=`${nsCur+1} / ${nsHits.length}${nsHits.length>=1000?"+":""}`;
+}
+$("nsInput").addEventListener("input",()=>{clearTimeout(nsT);nsT=setTimeout(nsRun,120)});
+$("nsInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){e.preventDefault();clearTimeout(nsT);if(!nsHits.length)nsRun();else nsGo(nsCur+(e.shiftKey?-1:1))}
+  else if(e.key==="Escape"){$("nsInput").value="";nsRun();$("nsInput").blur();e.stopPropagation()}
+});
+$("nsNext").onclick=()=>nsGo(nsCur+1);
+$("nsPrev").onclick=()=>nsGo(nsCur-1);
+/* on phones the keyboard covers the bottom of the screen: size the notes screen to what is visible so the bar sits above it */
+function fitNotesToViewport(){
+  const n=$("notes"),vv=window.visualViewport;
+  if(!vv||n.hidden||isSplit()||Math.abs(vv.height-innerHeight)<2&&vv.offsetTop<1){n.style.height="";n.style.top="";n.style.bottom="";return}
+  n.style.bottom="auto";n.style.top=vv.offsetTop+"px";n.style.height=vv.height+"px";
+}
+if(window.visualViewport){visualViewport.addEventListener("resize",fitNotesToViewport);visualViewport.addEventListener("scroll",fitNotesToViewport)}
 
 /* ---------- tap a figure to zoom ---------- */
 function openZoom(src,alt){$("zoomImg").src=src;$("zoomImg").alt=alt||"";$("zoom").hidden=false;$("zoom").scrollTop=0;$("zoom").scrollLeft=0}
