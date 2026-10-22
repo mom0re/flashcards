@@ -32,7 +32,7 @@ body{height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bg);c
 button{font:inherit;color:inherit;touch-action:manipulation;cursor:pointer}
 button:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .app{height:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px;
-  padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-block:10px 12px}
+  padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-block:10px max(12px,calc(env(safe-area-inset-bottom,0px) - 12px))}
 @media (min-width:600px){.app{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
 /* top bar */
 .top{display:flex;align-items:center;gap:10px}
@@ -93,7 +93,7 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
 .stamp.got{left:18px;color:var(--good);transform:rotate(-14deg)}
 .stamp.again{right:18px;color:var(--again);transform:rotate(14deg)}
 /* actions */
-.actions{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px;align-items:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+.actions{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px;align-items:center}
 .act{height:58px;border-radius:16px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font:600 13px var(--body)}
 .act .ic{font-size:20px;line-height:1;font-weight:700}
 .act.again{color:var(--muted)} .act.got{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -148,7 +148,7 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
 .nchip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font:600 13px var(--body);white-space:nowrap}
 .nchip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .nscroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scroll-behavior:smooth}
-.nwrap{max-width:720px;margin:0 auto;padding:18px max(18px,env(safe-area-inset-left,0px)) calc(60px + env(safe-area-inset-bottom,0px))}
+.nwrap{max-width:720px;margin:0 auto;padding:18px max(18px,env(safe-area-inset-left,0px)) 28px}
 .nch{padding-bottom:34px;margin-bottom:30px;border-bottom:1px solid var(--line)}
 .nch:last-child{border-bottom:0}
 .nhead{border-left:8px solid var(--sw);padding:2px 0 2px 14px;margin-bottom:14px}
@@ -214,7 +214,7 @@ svg.sk .gd{stroke:var(--line);stroke-width:1;fill:none}
  .nrail a.rs.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
 }
 /* notes search (find in page) */
-.nsearch{flex:none;display:flex;align-items:center;gap:6px;background:var(--bg);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right,0px)) max(10px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.nsearch{flex:none;display:flex;align-items:center;gap:6px;background:var(--bg);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right,0px)) max(8px,calc(env(safe-area-inset-bottom,0px) - 14px)) max(12px,env(safe-area-inset-left,0px))}
 .nsearch input{flex:1;min-width:0;height:42px;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:0 14px;font:16px var(--body);color:var(--ink);-webkit-appearance:none;appearance:none}
 .nsearch input:focus{outline:2px solid var(--accent);outline-offset:1px;background:var(--surface)}
 .nscount{flex:none;font:500 12px var(--mono);color:var(--muted);min-width:46px;text-align:center;font-variant-numeric:tabular-nums}
@@ -261,7 +261,7 @@ textarea#impPrompt{min-height:180px}
 .or{display:flex;align-items:center;gap:10px;color:var(--muted);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
 .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 </style>
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);height:100%}body{margin:0}[hidden]{display:none!important}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);height:100%}body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
 
