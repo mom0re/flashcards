@@ -608,7 +608,8 @@ $("nsPrev").onclick=()=>nsGo(nsCur-1);
 /* on phones the keyboard covers the bottom of the screen: size the notes screen to what is visible so the bar sits above it */
 function fitNotesToViewport(){
   const n=$("notes"),vv=window.visualViewport;
-  if(!vv||n.hidden||isSplit()||Math.abs(vv.height-innerHeight)<2&&vv.offsetTop<1){n.style.height="";n.style.top="";n.style.bottom="";return}
+  const keyboardUp=vv&&innerHeight-vv.height>140;
+  if(!vv||n.hidden||isSplit()||!keyboardUp){n.style.height="";n.style.top="";n.style.bottom="";return}
   n.style.bottom="auto";n.style.top=vv.offsetTop+"px";n.style.height=vv.height+"px";
 }
 if(window.visualViewport){visualViewport.addEventListener("resize",fitNotesToViewport);visualViewport.addEventListener("scroll",fitNotesToViewport)}
