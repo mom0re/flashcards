@@ -274,6 +274,42 @@ function attachDrag(c){
   };
   c.addEventListener("pointerup",end); c.addEventListener("pointercancel",end);
 }
+/* ---------- trackpad: two-finger swipe left/right over the card (MacBook) ----------
+   Swipe right = Got it, swipe left = Again. The card follows your fingers like a touch drag; let go early and it snaps back.
+   Vertical scrolling (answer text) and sideways scrolling inside tables/equations are left alone. */
+function attachWheel(){
+  const stack=$("stack"); if(!stack)return;
+  let acc=0,snapT=null,swallowUntil=0;
+  const THRESH=120;
+  const snapBack=()=>{
+    const c=$("top"); acc=0; if(!c)return;
+    const g=c.querySelector(".stamp.got"),ag=c.querySelector(".stamp.again");
+    c.classList.add("anim");c.style.transform="";if(g)g.style.opacity=0;if(ag)ag.style.opacity=0;
+    setTimeout(()=>c.classList.remove("anim"),330);
+  };
+  stack.addEventListener("wheel",e=>{
+    if(e.ctrlKey||e.metaKey)return;                                   // pinch-zoom / browser zoom
+    const horizontal=Math.abs(e.deltaX)>Math.abs(e.deltaY)*1.2;
+    if(!horizontal&&!acc)return;                                       // normal vertical scroll
+    if(e.target.closest&&e.target.closest(".tscroll,.eq,.math"))return;  // let tables/equations scroll sideways
+    e.preventDefault();                                                // stops the browser's back/forward swipe
+    const c=$("top"); if(!c||busy)return;
+    const now=performance.now();
+    if(now<swallowUntil){swallowUntil=now+250;return}                  // momentum after a swipe: ignore until it dies down
+    const unit=e.deltaMode===1?16:e.deltaMode===2?400:1;
+    // finger direction: with "natural" scrolling (default) fingers moving right gives a negative deltaX
+    const fingersRight=(e.webkitDirectionInvertedFromDevice===false?e.deltaX:-e.deltaX)*unit;
+    acc=Math.max(-400,Math.min(400,acc+fingersRight));
+    c.classList.remove("anim");
+    c.style.transform=`translateX(${acc}px) rotate(${acc/18}deg)`;
+    const g=c.querySelector(".stamp.got"),ag=c.querySelector(".stamp.again");
+    if(g)g.style.opacity=Math.max(0,Math.min(1,acc/90)); if(ag)ag.style.opacity=Math.max(0,Math.min(1,-acc/90));
+    clearTimeout(snapT);
+    if(Math.abs(acc)>=THRESH){const dir=acc>0?1:-1; acc=0; swallowUntil=now+250; fly(dir); return}
+    snapT=setTimeout(snapBack,140);
+  },{passive:false});
+}
+attachWheel();
 $("bFlip").onclick=flip; $("bGot").onclick=()=>fly(1); $("bAgain").onclick=()=>fly(-1);
 document.addEventListener("keydown",e=>{
   if(!$("zoom").hidden){if(e.key==="Escape")closeZoom();return}
