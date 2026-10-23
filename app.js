@@ -88,9 +88,11 @@ function writeUserRaw(list){try{localStorage.setItem(USER_KEY,JSON.stringify(lis
 let DECKS=[], D=null;
 const MEM={};
 let marks={},prefs={},best=0;
+const AGAIN_GAPS=[2,6,5,12];   // cards shown before an "Again" card returns: 1st press 2, then 6, 5, 12, then the cycle restarts
+let againN={};
 let queue=[],total=0,doneCount=0,gotCount=0,streak=0,flipped=false,busy=false;
 function loadDeck(){
-  const m=MEM[D.id]||(MEM[D.id]={marks:{},prefs:{ch:0,types:[],pp:false,known:false,shuffle:true},best:0});
+  const m=MEM[D.id]||(MEM[D.id]={marks:{},prefs:{chs:[],types:[],pp:false,known:false,shuffle:true},best:0});
   marks=m.marks; prefs=m.prefs; best=m.best;
 }
 function saveBest(){MEM[D.id].best=best}
@@ -98,7 +100,7 @@ function pickDeck(id){D=DECKS.find(d=>d.id===id)||DECKS[0]; loadDeck()}
 
 /* ---------- deck flow ---------- */
 function pool(){return D.cards.map((x,i)=>i).filter(i=>{const x=D.cards[i];
-  if(prefs.ch&&x.c!==prefs.ch)return false;
+  if(prefs.chs.length&&!prefs.chs.includes(x.c))return false;
   if(prefs.types.length&&!prefs.types.includes(x.t))return false;
   if(prefs.pp&&!x.pp)return false;
   if(!prefs.known&&marks[x.id]==="got")return false;
@@ -107,14 +109,16 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 function startDeck(){
   if(!D){renderEmptyLibrary();return}
   queue=orderQueue(pool(),prefs.shuffle);
-  total=queue.length; doneCount=0; gotCount=0; flipped=false; streak=0;
+  total=queue.length; doneCount=0; gotCount=0; flipped=false; streak=0; againN={};
   try{localStorage.setItem("sscards-last-deck",D.id)}catch(e){}
   updateTop(); countdown(); render();
 }
 function updateTop(){
   $("openNotes").hidden=!(D&&D.notes);
   syncLayout();
-  $("deckName").textContent=D.short+(prefs.ch&&Object.keys(D.sections).length>1?` · ${D.sectionWord} ${prefs.ch}`:"")+(prefs.pp?" · past papers":"");
+  const chSel=[...prefs.chs].sort((p,q)=>p-q);
+  const chTxt=!chSel.length||Object.keys(D.sections).length<2?"":(chSel.length<=3?` · ${D.sectionWord}${chSel.length>1?"s":""} ${chSel.join(", ")}`:` · ${chSel.length} ${D.sectionWord.toLowerCase()}s`);
+  $("deckName").textContent=D.short+chTxt+(prefs.pp?" · past papers":"");
   $("progBar").style.width=total?(100*doneCount/total)+"%":"0%";
   const known=D.cards.filter(x=>marks[x.id]==="got").length;
   $("subL").textContent=total?`${doneCount}/${total} cleared`:"";
@@ -196,14 +200,15 @@ function fly(dir){
 function commit(dir){
   const i=queue.shift(); const x=D.cards[i];
   if(dir===1){
-    marks[x.id]="got"; doneCount++; gotCount++; streak++;
+    delete againN[x.id]; marks[x.id]="got"; doneCount++; gotCount++; streak++;
     if(streak>best){best=streak;saveBest()}
     buzz(12);
     if(streak%10===0)toast(`${streak} in a row`);
     else if(doneCount===Math.ceil(total/2)&&total>=10)toast("Halfway through the deck");
   }else{
     marks[x.id]="again"; streak=0; buzz([8,40,8]);
-    queue.splice(Math.min(4,queue.length),0,i);
+    const step=againN[x.id]||0; againN[x.id]=step+1;
+    queue.splice(Math.min(AGAIN_GAPS[step%AGAIN_GAPS.length],queue.length),0,i);
   }
   flipped=false; updateTop(); render();
 }
@@ -274,14 +279,14 @@ function buildMenu(){
   if(!hasD)return;
   const secs=Object.keys(D.sections).map(Number).sort((a,b)=>a-b);
   $("secBlock").hidden=secs.length<2;
-  $("secLbl").textContent=D.sectionWord||"Section";
+  $("secLbl").textContent=(D.sectionWord||"Section")+" · pick one or more";
   const l=$("chList"); l.innerHTML="";
   for(const c of [0,...secs]){
     const set=D.cards.filter(x=>!c||x.c===c),got=set.filter(x=>marks[x.id]==="got").length;
     if(c&&!set.length)continue;
-    const b=document.createElement("button"); b.className="chbtn"; b.setAttribute("aria-pressed",String(prefs.ch===c));
+    const b=document.createElement("button"); b.className="chbtn"; b.setAttribute("aria-pressed",String(c?prefs.chs.includes(c):prefs.chs.length===0));
     b.innerHTML=`<span class="dot" style="background:${c?sw(c):"var(--accent)"}"></span><span class="nm">${c?`${c}. ${esc(D.sections[c])}`:"Everything"}</span><span class="ct">${got}/${set.length}</span>${bar(got,set.length)}`;
-    b.onclick=()=>{prefs.ch=c;buildMenu()}; l.appendChild(b);
+    b.onclick=()=>{prefs.chs=!c?[]:(prefs.chs.includes(c)?prefs.chs.filter(n=>n!==c):[...prefs.chs,c]);buildMenu()}; l.appendChild(b);
   }
   const tc=$("typeChips"); tc.innerHTML="";
   const present=Object.keys(TYPES).filter(k=>D.cards.some(x=>x.t===k));
@@ -493,7 +498,7 @@ function buildNotes(){
     b.onclick=()=>{sec.scrollIntoView({block:"start"})};chips.appendChild(b);
   }
   wrap.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
-    const c=+b.dataset.study;closeNotes();prefs.ch=c;prefs.types=[];prefs.pp=false;
+    const c=+b.dataset.study;closeNotes();prefs.chs=[c];prefs.types=[];prefs.pp=false;
     if(!pool().length)prefs.known=true;startDeck();toast(`${D.sectionWord} ${c} cards`);
   });
   notesBuilt=D.id;
