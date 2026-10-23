@@ -147,12 +147,16 @@ function buildUnits(idx){
   for(const u of units)u.ids.sort((p,q)=>(D.cards[p].part||0)-(D.cards[q].part||0));
   return units;
 }
-/* Next card is drawn at random from everything not yet "Got it". With x cards left, a normal card has weight 1/x and a card
-   you pressed Again on has weight 1/(x-3) (a little more likely, never certain). */
+/* Next card is drawn at random from everything not yet "Got it". A card you pressed Again on is a little more likely than a
+   normal card. With x cards left the extra chance is, in percent,
+       boost(x) = exp(5.9909 - 1.2855*ln(x) + 0.0410*ln(x)^2)
+   (log-log curve fitted through: x=131 -> 2%, x=50 -> 5%, x=20 -> 12%, x=10 -> 26%). Normal cards have weight 1,
+   Again cards 1 + boost/100. The boost grows as the pool shrinks, so late in a run Again cards come back more often. */
+function againBoost(x){const l=Math.log(Math.max(x,1));return Math.min(300,Math.exp(5.9909-1.2855*l+0.0410*l*l))}
 function pickUnit(units,exclude,rnd){
   const x=units.reduce((s,u)=>s+u.ids.length,0);
-  const wNormal=1/x, wAgain=1/Math.max(x-3,1);
-  const w=units.map(u=>u===exclude&&units.length>1?0:u.ids.length*(u.again?wAgain:wNormal));
+  const wAgain=1+againBoost(x)/100;
+  const w=units.map(u=>u===exclude&&units.length>1?0:u.ids.length*(u.again?wAgain:1));
   let r=(rnd||Math.random)()*w.reduce((s,v)=>s+v,0);
   for(let k=0;k<units.length;k++){ if(w[k]>0&&(r-=w[k])<=0)return units[k] }
   return units[units.length-1];
