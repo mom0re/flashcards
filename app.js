@@ -88,8 +88,7 @@ function writeUserRaw(list){try{localStorage.setItem(USER_KEY,JSON.stringify(lis
 let DECKS=[], D=null;
 const MEM={};
 let marks={},prefs={},best=0;
-const AGAIN_GAPS=[2,6,5,12];   // cards shown before an "Again" card returns: 1st press 2, then 6, 5, 12, then the cycle restarts
-let againN={};
+let pend=[];   // cards still to be drawn, as units: {ids:[...], again:bool}. Multi-part questions are one unit.
 let queue=[],total=0,doneCount=0,gotCount=0,streak=0,flipped=false,busy=false;
 function loadDeck(){
   const m=MEM[D.id]||(MEM[D.id]={marks:{},prefs:{chs:[],types:[],pp:false,known:false,shuffle:true},best:0});
@@ -108,8 +107,10 @@ function pool(){return D.cards.map((x,i)=>i).filter(i=>{const x=D.cards[i];
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function startDeck(){
   if(!D){renderEmptyLibrary();return}
-  queue=orderQueue(pool(),prefs.shuffle);
-  total=queue.length; doneCount=0; gotCount=0; flipped=false; streak=0; againN={};
+  const poolIdx=pool();
+  if(prefs.shuffle){ pend=buildUnits(poolIdx); queue=[]; refill(null) }
+  else { pend=[]; queue=orderQueue(poolIdx,false) }
+  total=poolIdx.length; doneCount=0; gotCount=0; flipped=false; streak=0;
   try{localStorage.setItem("sscards-last-deck",D.id)}catch(e){}
   updateTop(); countdown(); render();
 }
@@ -138,6 +139,29 @@ function groupInfo(x){
   const all=D.cards.filter(y=>y.g===x.g); if(all.length<2)return null;
   const sorted=all.slice().sort((a,b)=>(a.part||0)-(b.part||0));
   return {k:sorted.indexOf(x)+1,n:sorted.length};
+}
+function buildUnits(idx){
+  // parts of the same question stay together and in order
+  const units=[],byG={};
+  for(const i of idx){const x=D.cards[i]; if(x.g){ if(!byG[x.g]){byG[x.g]={ids:[],again:false};units.push(byG[x.g])} byG[x.g].ids.push(i) } else units.push({ids:[i],again:false})}
+  for(const u of units)u.ids.sort((p,q)=>(D.cards[p].part||0)-(D.cards[q].part||0));
+  return units;
+}
+/* Next card is drawn at random from everything not yet "Got it". With x cards left, a normal card has weight 1/x and a card
+   you pressed Again on has weight 1/(x-3) (a little more likely, never certain). */
+function pickUnit(units,exclude,rnd){
+  const x=units.reduce((s,u)=>s+u.ids.length,0);
+  const wNormal=1/x, wAgain=1/Math.max(x-3,1);
+  const w=units.map(u=>u===exclude&&units.length>1?0:u.ids.length*(u.again?wAgain:wNormal));
+  let r=(rnd||Math.random)()*w.reduce((s,v)=>s+v,0);
+  for(let k=0;k<units.length;k++){ if(w[k]>0&&(r-=w[k])<=0)return units[k] }
+  return units[units.length-1];
+}
+function refill(exclude){
+  while(queue.length<2&&pend.length){
+    const u=pickUnit(pend,exclude,Math.random); exclude=null;
+    pend.splice(pend.indexOf(u),1); queue.push(...u.ids);
+  }
 }
 function orderQueue(idx,shuf){
   // keep parts of the same question together and in order; shuffle whole questions
@@ -200,16 +224,17 @@ function fly(dir){
 function commit(dir){
   const i=queue.shift(); const x=D.cards[i];
   if(dir===1){
-    delete againN[x.id]; marks[x.id]="got"; doneCount++; gotCount++; streak++;
+    marks[x.id]="got"; doneCount++; gotCount++; streak++;
     if(streak>best){best=streak;saveBest()}
     buzz(12);
     if(streak%10===0)toast(`${streak} in a row`);
     else if(doneCount===Math.ceil(total/2)&&total>=10)toast("Halfway through the deck");
   }else{
     marks[x.id]="again"; streak=0; buzz([8,40,8]);
-    const step=againN[x.id]||0; againN[x.id]=step+1;
-    queue.splice(Math.min(AGAIN_GAPS[step%AGAIN_GAPS.length],queue.length),0,i);
+    if(prefs.shuffle){ const u={ids:[i],again:true}; pend.push(u); refill(u) }
+    else queue.splice(Math.min(4,queue.length),0,i);
   }
+  if(dir===1&&prefs.shuffle)refill(null);
   flipped=false; updateTop(); render();
 }
 
