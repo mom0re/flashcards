@@ -275,12 +275,17 @@ function attachDrag(c){
   c.addEventListener("pointerup",end); c.addEventListener("pointercancel",end);
 }
 /* ---------- trackpad: two-finger swipe left/right over the card (MacBook) ----------
-   Swipe right = Got it, swipe left = Again. The card follows your fingers like a touch drag; let go early and it snaps back.
+   Swipe right = Got it, swipe left = Again. The card follows your fingers with resistance (it moves about half as far as
+   your fingers), and it takes a long swipe to go through; let go early and it snaps back. ONE swipe = ONE card: after a
+   card goes, every wheel event is ignored (including the trackpad's coasting) until there has been 0.4 s of silence.
    Vertical scrolling (answer text) and sideways scrolling inside tables/equations are left alone. */
 function attachWheel(){
   const stack=$("stack"); if(!stack)return;
-  let acc=0,snapT=null,swallowUntil=0;
-  const THRESH=120;
+  const THRESH=220;     // finger travel (px) needed to send the card away
+  const RESIST=0.55;    // card moves this fraction of finger travel
+  const QUIET=400;      // ms of silence that ends a swipe (and its coasting)
+  let acc=0,snapT=null,locked=false,unlockT=null;
+  const lock=()=>{locked=true;clearTimeout(unlockT);unlockT=setTimeout(()=>{locked=false;acc=0},QUIET)};
   const snapBack=()=>{
     const c=$("top"); acc=0; if(!c)return;
     const g=c.querySelector(".stamp.got"),ag=c.querySelector(".stamp.again");
@@ -290,23 +295,23 @@ function attachWheel(){
   stack.addEventListener("wheel",e=>{
     if(e.ctrlKey||e.metaKey)return;                                   // pinch-zoom / browser zoom
     const horizontal=Math.abs(e.deltaX)>Math.abs(e.deltaY)*1.2;
+    if(locked){ lock(); if(horizontal)e.preventDefault(); return }     // coasting after a swipe: swallow it, keep waiting for silence
     if(!horizontal&&!acc)return;                                       // normal vertical scroll
     if(e.target.closest&&e.target.closest(".tscroll,.eq,.math"))return;  // let tables/equations scroll sideways
     e.preventDefault();                                                // stops the browser's back/forward swipe
     const c=$("top"); if(!c||busy)return;
-    const now=performance.now();
-    if(now<swallowUntil){swallowUntil=now+250;return}                  // momentum after a swipe: ignore until it dies down
     const unit=e.deltaMode===1?16:e.deltaMode===2?400:1;
     // finger direction: with "natural" scrolling (default) fingers moving right gives a negative deltaX
     const fingersRight=(e.webkitDirectionInvertedFromDevice===false?e.deltaX:-e.deltaX)*unit;
-    acc=Math.max(-400,Math.min(400,acc+fingersRight));
+    acc=Math.max(-THRESH*1.3,Math.min(THRESH*1.3,acc+fingersRight));
+    const shown=acc*RESIST;
     c.classList.remove("anim");
-    c.style.transform=`translateX(${acc}px) rotate(${acc/18}deg)`;
+    c.style.transform=`translateX(${shown}px) rotate(${shown/18}deg)`;
     const g=c.querySelector(".stamp.got"),ag=c.querySelector(".stamp.again");
-    if(g)g.style.opacity=Math.max(0,Math.min(1,acc/90)); if(ag)ag.style.opacity=Math.max(0,Math.min(1,-acc/90));
+    if(g)g.style.opacity=Math.max(0,Math.min(1,shown/90)); if(ag)ag.style.opacity=Math.max(0,Math.min(1,-shown/90));
     clearTimeout(snapT);
-    if(Math.abs(acc)>=THRESH){const dir=acc>0?1:-1; acc=0; swallowUntil=now+250; fly(dir); return}
-    snapT=setTimeout(snapBack,140);
+    if(Math.abs(acc)>=THRESH){const dir=acc>0?1:-1; acc=0; lock(); fly(dir); return}
+    snapT=setTimeout(snapBack,180);
   },{passive:false});
 }
 attachWheel();
